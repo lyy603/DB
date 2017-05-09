@@ -4,6 +4,7 @@
     <color name="color_primary_dark">@color/primary_dark</color>
     <color name="color_primary_light">@color/primary_light</color>
     <color name="color_secondary_text">@color/secondary_text</color>
+    <color name="color_accent">@color/accent</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
@@ -20,4 +21,9 @@
     <color name="color_text_grey">#c2c2c2</color>
     <color name="color_text_white">#ffffff</color>
     <color name="color_text_hint">#8f8e94</color>
+
+    <!--各种颜色-->
+    <color name="transparent">#00000000</color>
+    <color name="color_white">#ffffff</color>
+    <color name="color_black">#000000</color>
 </resources>
