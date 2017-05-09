@@ -10,6 +10,10 @@
     <color name="color_icons">@color/icons</color>
     <color name="color_divider">@color/divider</color>
 
+    <!--导航栏-->
+    <color name="color_tab_pressed">@color/color_primary</color>
+    <color name="color_tab_normal">@color/color_secondary_text</color>
+
     <!--字体文本颜色-->
     <color name="color_text_normal">#3c4457</color>
     <color name="color_text_black">#030303</color>
