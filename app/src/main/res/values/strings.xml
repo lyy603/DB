@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">DBLYY</string>
+    <string name="app_name">豆瓣电影</string>
+
+    <!--通用-->
+    <string name="progress_loading">正在努力工作，请稍等…</string>
+    <string name="explore">发现</string>
+    <string name="user">我的</string>
+    <string name="enter">确定</string>
+    <string name="cancel">取消</string>
+    <string name="send">发送</string>
+    <string name="second_exit">"再按一次Back键退出程序"</string>
+    <string name="error_grant">部分所需权限请求被拒绝，程序可能会出现崩溃！</string>
+    <string name="demo_empty">是空的哦</string>
+
+    <!--预览图片-->
+    <string name="gallery">预览图片</string>
+    <string name="loadmore_end">所有数据加载完成</string>
+    <string name="loadmore_fail">加载失败，点击重试</string>
 </resources>
