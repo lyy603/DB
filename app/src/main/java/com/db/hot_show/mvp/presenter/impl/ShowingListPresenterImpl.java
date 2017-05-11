@@ -41,7 +41,7 @@ public class ShowingListPresenterImpl implements IShowingListPresenter {
                 .subscribe(new HttpSubscriber<ShowingListBean>() {
                     @Override
                     public void _onNext(ShowingListBean showingListBean) {
-
+                        view.updateRecyclerView(showingListBean);
                     }
 
                     @Override

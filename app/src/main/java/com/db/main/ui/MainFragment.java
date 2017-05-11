@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.utils.ToastUtils;
@@ -25,7 +24,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -36,6 +34,12 @@ import me.yokeyword.fragmentation.SupportFragment;
 public class MainFragment extends BaseFragment {
 
     private static final String KEY = "key";
+
+//    @BindView(R.id.layout_container)
+//    FrameLayout layout_container;
+
+    //    @BindView(R.id.magic_indicator)
+    MagicIndicator magic_indicator;
 
     private final int[] normalResId = new int[]{
             R.drawable.ic_hot_show_normal,
@@ -54,12 +58,6 @@ public class MainFragment extends BaseFragment {
             R.string.tab_find,
             R.string.tab_personal
     };
-
-    @BindView(R.id.layout_container)
-    FrameLayout layout_container;
-
-    @BindView(R.id.magic_indicator)
-    MagicIndicator magic_indicator;
 
     private final SupportFragment[] fragments = new SupportFragment[3];
 
@@ -87,6 +85,7 @@ public class MainFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+        magic_indicator = (MagicIndicator) view.findViewById(R.id.magic_indicator);
 
         ButterKnife.bind(this, view);
 

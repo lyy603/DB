@@ -3,27 +3,31 @@ package com.db.hot_show.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.utils.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.db.API;
 import com.db.R;
+import com.db.hot_show.adapter.ShowingListAdapter;
 import com.db.hot_show.mvp.model.bean.ShowingListBean;
 import com.db.hot_show.mvp.presenter.impl.ShowingListPresenterImpl;
 import com.db.hot_show.mvp.view.IShowingListView;
 import com.db.util.ProgressUtil;
 import com.db.widget.fragment.BaseFragment;
+import com.db.widget.recyclerview.CustomLoadMoreView;
+import com.db.widget.recyclerview.animation.CustomAnimation;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.OnClick;
 
-public class ShowingFragment extends BaseFragment implements IShowingListView {
+public class ShowingFragment extends BaseFragment implements IShowingListView,
+        BaseQuickAdapter.RequestLoadMoreListener {
 
     private static final String KEY = "hot_show_ing";
 
@@ -33,9 +37,10 @@ public class ShowingFragment extends BaseFragment implements IShowingListView {
 
     private ShowingListPresenterImpl presenter;
 
-    private List<Fragment> fragmentList = new ArrayList<>();
+    private ShowingListAdapter listAdapter;
 
-    private List<String> selectedTitleList = new ArrayList<>();
+    //列表当前页码
+    private String count = "1";
 
     public static ShowingFragment newInstance() {
         return newInstance("");
@@ -67,7 +72,7 @@ public class ShowingFragment extends BaseFragment implements IShowingListView {
         super.onLazyInitView(savedInstanceState);
         if (savedInstanceState == null)
             presenter.getShowingList("0b2bdeda43b5688921839c8ecb20399b",
-                    "北京", "1", API.LIMIT + "");
+                    "北京", count, API.LIMIT + "");
     }
 
     private void initView() {
@@ -76,6 +81,14 @@ public class ShowingFragment extends BaseFragment implements IShowingListView {
         presenter = new ShowingListPresenterImpl(this);
 
         //初始化recyclerview
+        listAdapter = new ShowingListAdapter(new ArrayList<>());
+        listAdapter.openLoadAnimation(new CustomAnimation());
+        listAdapter.setAutoLoadMoreSize(API.LIMIT);//加载更多的触发条件
+        listAdapter.setOnLoadMoreListener(this, recycler_view);//加载更多回调监听
+        listAdapter.setLoadMoreView(new CustomLoadMoreView());
+
+        recycler_view.setLayoutManager(new LinearLayoutManager(context));
+        recycler_view.setAdapter(listAdapter);
 
     }
 
@@ -94,7 +107,14 @@ public class ShowingFragment extends BaseFragment implements IShowingListView {
     }
 
     @Override
-    public void updateRecyclerView(List<ShowingListBean> list) {
+    public void updateRecyclerView(ShowingListBean listBean) {
+        this.count = listBean.getCount() + "";
+        listAdapter.addData(listBean.getSubjects());
+    }
 
+    @Override
+    public void onLoadMoreRequested() {
+        presenter.getShowingList("0b2bdeda43b5688921839c8ecb20399b",
+                "北京", count, API.LIMIT + "");
     }
 }
