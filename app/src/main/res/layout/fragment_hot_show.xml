@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_text_white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_size_small">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:drawableEnd="@drawable/ic_arrow_down"
+            android:gravity="center"
+            android:text="@string/hot_showing_address_unset"
+            android:textColor="@color/color_text_black"
+            android:textSize="18dp" />
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:background="@drawable/common_black_border_inside"-->
+        <!--android:gravity="center">-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_movie"-->
+        <!--android:layout_width="65dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:background="@drawable/common_black_border"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="@color/color_text_white"-->
+        <!--android:textSize="15dp" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_cinema"-->
+        <!--android:layout_width="65dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="@color/color_text_subheading"-->
+        <!--android:textSize="15dp" />-->
+
+        <!--</LinearLayout>-->
+
+        <ImageView
+            android:contentDescription="搜索图片"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_search" />
+
+    </RelativeLayout>
+
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:id="@+id/magic_indicator_hot_show"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

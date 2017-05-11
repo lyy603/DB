@@ -21,4 +21,9 @@
     <string name="tab_hot_show">热映</string>
     <string name="tab_find">找片</string>
     <string name="tab_personal">我的</string>
+
+    <!--热映-->
+    <string name="hot_showing_address_unset">未设置</string>
+    <string name="hot_showing_search_hint">电影/电视剧/影人</string>
+
 </resources>
