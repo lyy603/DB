@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.utils.ToastUtils;
 import com.dblyy.R;
 import com.dblyy.demo_normal.ui.DemoNormalFragment;
+import com.dblyy.hot_show.ui.HotShowFragment;
 import com.dblyy.widget.fragment.BaseFragment;
 
 import net.lucode.hackware.magicindicator.FragmentContainerHelper;
@@ -105,7 +106,7 @@ public class MainFragment extends BaseFragment {
 
         /***设置其他View***/
         //Fragment相关
-        fragments[0] = DemoNormalFragment.newInstance();
+        fragments[0] = HotShowFragment.newInstance();
         fragments[1] = DemoNormalFragment.newInstance();
         fragments[2] = DemoNormalFragment.newInstance();
 
