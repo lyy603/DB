@@ -36,6 +36,7 @@
     <dimen name="padding_size_small">10dp</dimen>
     <dimen name="padding_size_supersmall">5dp</dimen>
     <dimen name="padding_size_limitsmall">3dp</dimen>
+
     <!-- 外边距 -->
     <dimen name="margin_size_large">30dp</dimen>
     <dimen name="margin_size_medium">20dp</dimen>
@@ -43,5 +44,13 @@
     <dimen name="margin_size_small">10dp</dimen>
     <dimen name="margin_size_supersmall">5dp</dimen>
     <dimen name="margin_size_limitsmall">3dp</dimen>
+
+    <!-- 半径 -->
+    <dimen name="radius_size_super_large">25dp</dimen>
+    <dimen name="radius_size_large">15dp</dimen>
+    <dimen name="radius_size_medium">10dp</dimen>
+    <dimen name="radius_size_min">6dp</dimen>
+    <dimen name="radius_size_small">3dp</dimen>
+    <dimen name="radius_size_limit_small">1dp</dimen>
 
 </resources>
