@@ -23,7 +23,8 @@ public class ShowingListAdapter extends BaseQuickAdapter<ShowingListBean.Subject
 
         viewHolder.setText(R.id.tv_title, bean.getTitle())
                 .setText(R.id.tv_director, bean.getDirectors().get(0).getName())
-                .setText(R.id.tv_leading_role, bean.getCasts().get(0).getName());
+                .setText(R.id.tv_leading_role, bean.getCasts().get(0).getName())
+                .setText(R.id.btn_buy, mContext.getString(R.string.hot_showing_buy_ticket));
 
         Glide.with(mContext)
                 .load(bean.getImages().getSmall())

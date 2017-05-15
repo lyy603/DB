@@ -35,6 +35,8 @@ public class ShowingFragment extends BaseFragment implements IShowingListView,
 
     private Context context;
 
+    private HotShowFragment parentFragment;
+
     private ShowingListPresenterImpl presenter;
 
     private ShowingListAdapter listAdapter;
@@ -110,6 +112,8 @@ public class ShowingFragment extends BaseFragment implements IShowingListView,
     public void updateRecyclerView(ShowingListBean listBean) {
         this.count = listBean.getCount() + "";
         listAdapter.addData(listBean.getSubjects());
+        parentFragment = (HotShowFragment) getParentFragment();
+        parentFragment.updateImageView(listBean.getSubjects().get(0).getImages().getMedium());
     }
 
     @Override

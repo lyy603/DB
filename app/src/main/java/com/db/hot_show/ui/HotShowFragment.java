@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.blankj.utilcode.utils.SizeUtils;
 import com.db.R;
-import com.db.demo_normal.ui.DemoNormalFragment;
+import com.db.hot_show.mvp.view.IPhotoViewPagerView;
 import com.db.util.global.FragmentAdapter;
 import com.db.widget.fragment.BaseFragment;
 
@@ -30,15 +30,21 @@ import java.util.List;
 
 import butterknife.OnClick;
 
-public class HotShowFragment extends BaseFragment {
+public class HotShowFragment extends BaseFragment implements IPhotoViewPagerView {
 
     private MagicIndicator magic_indicator_hot_show;
+
+    private ViewPager viewpager_photo;
 
     private ViewPager viewpager;
 
     private Context context;
 
+    private PhotoViewPagerFragment photoFragment;
+
     private List<Fragment> fragmentList = new ArrayList<>();
+
+    private List<Fragment> pagerFragmentList = new ArrayList<>();
 
     private List<String> selectedTitleList = new ArrayList<>();
 
@@ -51,6 +57,7 @@ public class HotShowFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_hot_show, container, false);
         magic_indicator_hot_show = (MagicIndicator) view.findViewById(R.id.magic_indicator_hot_show);
+        viewpager_photo = (ViewPager) view.findViewById(R.id.viewpager_photo);
         viewpager = (ViewPager) view.findViewById(R.id.viewpager);
 
         context = view.getContext();
@@ -65,11 +72,15 @@ public class HotShowFragment extends BaseFragment {
         //初始化MVP
 
         //初始化viewpager
+        pagerFragmentList.add(PhotoViewPagerFragment.newInstance("0"));
+        FragmentAdapter pagerAdapter = new FragmentAdapter(this.getChildFragmentManager(),pagerFragmentList);
+        viewpager_photo.setAdapter(pagerAdapter);
+
         String[] nameArray = getResources().getStringArray(R.array.hot_show_tname);
         for (String aTnameArray : nameArray)
             selectedTitleList.add(aTnameArray);
 
-        fragmentList.add(DemoNormalFragment.newInstance("0"));
+        fragmentList.add(ShowingFragment.newInstance("0"));
         fragmentList.add(ShowingFragment.newInstance("1"));
         FragmentAdapter fragmentAdapter = new FragmentAdapter(this.getChildFragmentManager(), fragmentList);
         viewpager.setAdapter(fragmentAdapter);
@@ -124,5 +135,16 @@ public class HotShowFragment extends BaseFragment {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void updateImageView(String img) {
+        photoFragment = (PhotoViewPagerFragment) pagerFragmentList.get(0);
+        photoFragment.updateImageView(img);
+    }
+
+    @Override
+    public void showError(String message) {
+
     }
 }
