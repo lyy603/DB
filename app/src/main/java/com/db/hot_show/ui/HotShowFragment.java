@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.blankj.utilcode.utils.SizeUtils;
 import com.db.R;
-import com.db.hot_show.mvp.view.IPhotoViewPagerView;
 import com.db.util.global.FragmentAdapter;
 import com.db.widget.fragment.BaseFragment;
 
@@ -30,7 +29,7 @@ import java.util.List;
 
 import butterknife.OnClick;
 
-public class HotShowFragment extends BaseFragment implements IPhotoViewPagerView {
+public class HotShowFragment extends BaseFragment {
 
     private MagicIndicator magic_indicator_hot_show;
 
@@ -67,13 +66,18 @@ public class HotShowFragment extends BaseFragment implements IPhotoViewPagerView
         return view;
     }
 
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+    }
+
     private void initView() {
 
         //初始化MVP
 
         //初始化viewpager
         pagerFragmentList.add(PhotoViewPagerFragment.newInstance("0"));
-        FragmentAdapter pagerAdapter = new FragmentAdapter(this.getChildFragmentManager(),pagerFragmentList);
+        FragmentAdapter pagerAdapter = new FragmentAdapter(this.getChildFragmentManager(), pagerFragmentList);
         viewpager_photo.setAdapter(pagerAdapter);
 
         String[] nameArray = getResources().getStringArray(R.array.hot_show_tname);
@@ -135,16 +139,5 @@ public class HotShowFragment extends BaseFragment implements IPhotoViewPagerView
             default:
                 break;
         }
-    }
-
-    @Override
-    public void updateImageView(String img) {
-        photoFragment = (PhotoViewPagerFragment) pagerFragmentList.get(0);
-        photoFragment.updateImageView(img);
-    }
-
-    @Override
-    public void showError(String message) {
-
     }
 }

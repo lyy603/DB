@@ -21,6 +21,8 @@ public class PhotoViewPagerFragment extends BaseFragment implements IPhotoViewPa
 
     private static final String KEY = "hot_show_ing_pager";
 
+    private String img = "http://img3.doubanio.com/view/photo/photo/public/p2457689105.webp";
+
     private ImageView imageView;
 
     private Context context;
@@ -52,14 +54,19 @@ public class PhotoViewPagerFragment extends BaseFragment implements IPhotoViewPa
         return view;
     }
 
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+    }
+
     private void initView() {
+        updateImageView(img);
     }
 
     @Override
     public void updateImageView(String img) {
         Glide.with(context)
                 .load(img)
-                .centerCrop()
                 .crossFade()
                 .into(imageView);
     }
