@@ -39,7 +39,7 @@ public class PhotoBehavior extends CoordinatorLayout.Behavior {
     public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
         float translationY = dependency.getTranslationY();
         childHeight = child.getHeight();
-        if (translationY < dependency.getHeight())
+        if (translationY <= childHeight)
             child.setTranslationY(translationY - childHeight);
         return true;
     }
