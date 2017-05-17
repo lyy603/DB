@@ -8,7 +8,6 @@ import com.db.widget.activity.BaseActivity;
 
 
 /**
- * author: LMJ
  * date: 2016/9/1
  */
 public class RootActivity extends BaseActivity {
@@ -19,5 +18,12 @@ public class RootActivity extends BaseActivity {
         setContentView(R.layout.activity_root);
 
         loadRootFragment(R.id.layout_container, MainFragment.newInstance());
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        super.onBackPressedSupport();
+        if (!(getSupportFragmentManager().getBackStackEntryCount() > 1))
+            android.os.Process.killProcess(android.os.Process.myPid());
     }
 }
