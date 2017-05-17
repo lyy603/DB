@@ -67,6 +67,7 @@ public class PhotoViewPagerFragment extends BaseFragment implements IPhotoViewPa
     public void updateImageView(String img) {
         Glide.with(context)
                 .load(img)
+                .centerCrop()
                 .crossFade()
                 .into(imageView);
     }
