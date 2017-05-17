@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.db.App;
 import com.db.R;
 import com.db.hot_show.mvp.model.bean.ShowingListBean;
 
@@ -24,7 +25,7 @@ public class ShowingListAdapter extends BaseQuickAdapter<ShowingListBean.Subject
         viewHolder.setText(R.id.tv_title, bean.getTitle())
                 .setText(R.id.tv_director, bean.getDirectors().get(0).getName())
                 .setText(R.id.tv_leading_role, bean.getCasts().get(0).getName())
-                .setText(R.id.btn_buy, mContext.getString(R.string.hot_showing_buy_ticket));
+                .setText(R.id.btn_buy, App.getContext().getString(R.string.hot_showing_buy_ticket));
 
         Glide.with(mContext)
                 .load(bean.getImages().getSmall())

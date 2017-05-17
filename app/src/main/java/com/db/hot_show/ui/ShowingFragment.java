@@ -26,8 +26,6 @@ import com.db.widget.recyclerview.animation.CustomAnimation;
 
 import java.util.ArrayList;
 
-import butterknife.OnClick;
-
 public class ShowingFragment extends BaseFragment implements IShowingListView,
         BaseQuickAdapter.RequestLoadMoreListener,IIsChildRequestScrollListener {
 
@@ -100,18 +98,11 @@ public class ShowingFragment extends BaseFragment implements IShowingListView,
         ToastUtils.showShortToast(message);
     }
 
-    @OnClick({R.id.toolbar_iv_back})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            default:
-                break;
-        }
-    }
-
     @Override
     public void updateRecyclerView(ShowingListBean listBean) {
         this.count = listBean.getStart() + 1 + "";
         listAdapter.addData(listBean.getSubjects());
+        listAdapter.loadMoreComplete();
     }
 
     @Override
