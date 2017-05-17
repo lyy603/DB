@@ -53,4 +53,7 @@
     <dimen name="radius_size_small">3dp</dimen>
     <dimen name="radius_size_limit_small">1dp</dimen>
 
+
+    <dimen name="airbnb_translation_min">100dp</dimen>
+
 </resources>

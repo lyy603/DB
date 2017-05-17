@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.blankj.utilcode.utils.SizeUtils;
 import com.db.R;
+import com.db.hot_show.adapter.HotShowingViewPagerAdapter;
 import com.db.util.global.FragmentAdapter;
 import com.db.widget.fragment.BaseFragment;
 
@@ -86,7 +87,8 @@ public class HotShowFragment extends BaseFragment {
 
         fragmentList.add(ShowingFragment.newInstance("0"));
         fragmentList.add(ShowingFragment.newInstance("1"));
-        FragmentAdapter fragmentAdapter = new FragmentAdapter(this.getChildFragmentManager(), fragmentList);
+        HotShowingViewPagerAdapter fragmentAdapter =
+                new HotShowingViewPagerAdapter(this.getChildFragmentManager(), viewpager, fragmentList);
         viewpager.setAdapter(fragmentAdapter);
         viewpager.setOffscreenPageLimit(2);
 

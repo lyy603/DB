@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_text_white"
@@ -48,28 +49,37 @@
         <!--</LinearLayout>-->
 
         <ImageView
-            android:contentDescription="搜索图片"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_gravity="center"
-            android:background="@drawable/ic_search" />
+            android:background="@drawable/ic_search"
+            android:contentDescription="搜索图片" />
 
     </RelativeLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager_photo"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        android:layout_height="match_parent">
 
-    <net.lucode.hackware.magicindicator.MagicIndicator
-        android:id="@+id/magic_indicator_hot_show"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager_photo"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:layout_behavior="com.db.hot_show.ui.behavior.PhotoBehavior" />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magic_indicator_hot_show"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_behavior="com.db.hot_show.ui.behavior.MagicIndicatorBehavior" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.db.hot_show.ui.behavior.ShowingListBehavior" />
+
+    </android.support.design.widget.CoordinatorLayout>
 
 </LinearLayout>

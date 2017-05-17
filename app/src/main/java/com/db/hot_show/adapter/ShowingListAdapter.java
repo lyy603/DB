@@ -11,7 +11,7 @@ import com.db.hot_show.mvp.model.bean.ShowingListBean;
 import java.util.List;
 
 
-public class ShowingListAdapter extends BaseQuickAdapter<ShowingListBean.SubjectsBean, BaseViewHolder> {
+public class ShowingListAdapter extends BaseQuickAdapter<ShowingListBean.SubjectsBean, BaseViewHolder>{
 
 
     public ShowingListAdapter(List<ShowingListBean.SubjectsBean> data) {

@@ -23,9 +23,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name="db.db.MainActivity">
-        </activity>
-
         <activity
             android:name=".root.ui.RootActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|screenLayout"

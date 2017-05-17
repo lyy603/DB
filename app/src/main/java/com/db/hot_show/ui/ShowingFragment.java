@@ -3,6 +3,7 @@ package com.db.hot_show.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.db.R;
 import com.db.hot_show.adapter.ShowingListAdapter;
 import com.db.hot_show.mvp.model.bean.ShowingListBean;
 import com.db.hot_show.mvp.presenter.impl.ShowingListPresenterImpl;
+import com.db.hot_show.mvp.view.IIsChildRequestScrollListener;
 import com.db.hot_show.mvp.view.IShowingListView;
 import com.db.util.ProgressUtil;
 import com.db.widget.fragment.BaseFragment;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 import butterknife.OnClick;
 
 public class ShowingFragment extends BaseFragment implements IShowingListView,
-        BaseQuickAdapter.RequestLoadMoreListener {
+        BaseQuickAdapter.RequestLoadMoreListener,IIsChildRequestScrollListener {
 
     private static final String KEY = "hot_show_ing";
 
@@ -116,5 +118,15 @@ public class ShowingFragment extends BaseFragment implements IShowingListView,
     public void onLoadMoreRequested() {
         presenter.getShowingList("0b2bdeda43b5688921839c8ecb20399b",
                 "北京", count, API.LIMIT + "");
+    }
+
+    @Override
+    public boolean requestScroll(boolean up, boolean shouldNotRefresh) {
+        //向上滑动,并且 mRecyclerView 可以上滑动
+        return (up && ViewCompat.canScrollVertically(recycler_view, 1)) ||
+                //向下滑动,且可以下滑或者(可以刷新,且不在初始位置,不在顶部)
+                (!up && (ViewCompat.canScrollVertically(recycler_view, -1) ||
+                        (!shouldNotRefresh&&((LinearLayoutManager) recycler_view.getLayoutManager()).findFirstCompletelyVisibleItemPosition() == 0)));
+
     }
 }
