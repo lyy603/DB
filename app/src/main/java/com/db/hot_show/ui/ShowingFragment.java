@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,7 +20,6 @@ import com.db.hot_show.mvp.model.bean.ShowingListBean;
 import com.db.hot_show.mvp.presenter.impl.ShowingListPresenterImpl;
 import com.db.hot_show.mvp.view.IIsChildRequestScrollListener;
 import com.db.hot_show.mvp.view.IShowingListView;
-import com.db.util.ProgressUtil;
 import com.db.widget.fragment.BaseFragment;
 import com.db.widget.recyclerview.CustomLoadMoreView;
 import com.db.widget.recyclerview.animation.CustomAnimation;
@@ -27,11 +27,14 @@ import com.db.widget.recyclerview.animation.CustomAnimation;
 import java.util.ArrayList;
 
 public class ShowingFragment extends BaseFragment implements IShowingListView,
-        BaseQuickAdapter.RequestLoadMoreListener,IIsChildRequestScrollListener {
+        BaseQuickAdapter.RequestLoadMoreListener, IIsChildRequestScrollListener,
+        SwipeRefreshLayout.OnRefreshListener {
 
     private static final String KEY = "hot_show_ing";
 
     RecyclerView recycler_view;
+
+    SwipeRefreshLayout refresh_layout;
 
     private Context context;
 
@@ -39,8 +42,8 @@ public class ShowingFragment extends BaseFragment implements IShowingListView,
 
     private ShowingListAdapter listAdapter;
 
-    //列表当前页码
-    private String count = "1";
+    //请求列表的第一个数据的位置
+    private int offset = 0;
 
     public static ShowingFragment newInstance() {
         return newInstance("");
@@ -59,6 +62,7 @@ public class ShowingFragment extends BaseFragment implements IShowingListView,
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_showing, container, false);
         recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view_showing);
+        refresh_layout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
 
         context = view.getContext();
 
@@ -71,14 +75,17 @@ public class ShowingFragment extends BaseFragment implements IShowingListView,
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         if (savedInstanceState == null)
-            presenter.getShowingList("0b2bdeda43b5688921839c8ecb20399b",
-                    "北京", count, API.LIMIT + "");
+            requestList();
     }
 
     private void initView() {
 
         //初始化MVP
         presenter = new ShowingListPresenterImpl(this);
+
+        //设置RefreshLayout
+        refresh_layout.setColorSchemeResources(R.color.color_primary);
+        refresh_layout.setOnRefreshListener(this);
 
         //初始化recyclerview
         listAdapter = new ShowingListAdapter(new ArrayList<>());
@@ -94,21 +101,24 @@ public class ShowingFragment extends BaseFragment implements IShowingListView,
 
     @Override
     public void showError(String message) {
-        ProgressUtil.dismiss();
+        listAdapter.loadMoreFail();
         ToastUtils.showShortToast(message);
+        refresh_layout.setRefreshing(false);
     }
 
     @Override
     public void updateRecyclerView(ShowingListBean listBean) {
-        this.count = listBean.getStart() + 1 + "";
+        this.offset = this.offset + listBean.getCount();
         listAdapter.addData(listBean.getSubjects());
-        listAdapter.loadMoreComplete();
+        if (listBean.getCount() < API.LIMIT)
+            listAdapter.loadMoreEnd(true);
+        else
+            listAdapter.loadMoreComplete();
     }
 
     @Override
     public void onLoadMoreRequested() {
-        presenter.getShowingList("0b2bdeda43b5688921839c8ecb20399b",
-                "北京", count, API.LIMIT + "");
+        requestList();
     }
 
     @Override
@@ -117,7 +127,21 @@ public class ShowingFragment extends BaseFragment implements IShowingListView,
         return (up && ViewCompat.canScrollVertically(recycler_view, 1)) ||
                 //向下滑动,且可以下滑或者(可以刷新,且不在初始位置,不在顶部)
                 (!up && (ViewCompat.canScrollVertically(recycler_view, -1) ||
-                        (!shouldNotRefresh&&((LinearLayoutManager) recycler_view.getLayoutManager()).findFirstCompletelyVisibleItemPosition() == 0)));
+                        (!shouldNotRefresh && ((LinearLayoutManager) recycler_view.getLayoutManager()).findFirstCompletelyVisibleItemPosition() == 0)));
 
+    }
+
+    @Override
+    public void onRefresh() {
+        offset = 0;
+        listAdapter.setNewData(new ArrayList<>());
+        listAdapter.removeAllFooterView();
+        refresh_layout.setRefreshing(true);
+        requestList();
+    }
+
+    private void requestList() {
+        presenter.getShowingList("0b2bdeda43b5688921839c8ecb20399b",
+                "北京", offset + "", API.LIMIT + "");
     }
 }

@@ -46,7 +46,7 @@ public class ShowingListPresenterImpl implements IShowingListPresenter {
 
                     @Override
                     public void _onError(String message) {
-
+                        view.showError(message);
                     }
                 });
     }
