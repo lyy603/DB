@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -96,6 +97,7 @@ public class ShowingFragment extends BaseFragment implements IShowingListView,
 
         recycler_view.setLayoutManager(new LinearLayoutManager(context));
         recycler_view.setAdapter(listAdapter);
+        recycler_view.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
 
     }
 

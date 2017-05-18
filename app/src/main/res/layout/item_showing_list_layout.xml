@@ -15,11 +15,11 @@
 
     <TextView
         android:id="@+id/btn_buy"
-        android:layout_width="85dp"
-        android:layout_height="35dp"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/tv_director"
-        android:layout_marginLeft="@dimen/margin_size_small"
+        android:layout_marginLeft="@dimen/margin_size_min"
         android:layout_marginRight="@dimen/margin_size_small"
         android:background="@drawable/common_pink_border"
         android:gravity="center"
