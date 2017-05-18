@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blankj.utilcode.utils.ToastUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.db.API;
 import com.db.R;
@@ -102,7 +102,7 @@ public class ShowingFragment extends BaseFragment implements IShowingListView,
     @Override
     public void showError(String message) {
         listAdapter.loadMoreFail();
-        ToastUtils.showShortToast(message);
+        ToastUtils.showShort(message);
         refresh_layout.setRefreshing(false);
     }
 

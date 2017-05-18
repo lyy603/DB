@@ -5,7 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.blankj.utilcode.utils.ToastUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.db.R;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -38,7 +38,7 @@ public class BaseActivity extends SupportActivity {
                         } else {
                             // Denied permission with ask never again
                             // Need to go to the settings
-                            ToastUtils.showShortToast(getString(R.string.error_grant));
+                            ToastUtils.showShort(getString(R.string.error_grant));
                         }
 
                     });

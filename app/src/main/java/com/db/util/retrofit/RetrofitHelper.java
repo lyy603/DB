@@ -1,6 +1,6 @@
 package com.db.util.retrofit;
 
-import com.blankj.utilcode.utils.NetworkUtils;
+import com.blankj.utilcode.util.NetworkUtils;
 import com.db.App;
 
 import java.io.File;
@@ -25,7 +25,7 @@ public class RetrofitHelper {
     //公共域名
     public static final String BASE_URL = "http://api.douban.com/v2/movie/";
 
-    private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = chain -> {
+    private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTO = chain -> {
 
         Request request = chain.request();
         if (!NetworkUtils.isAvailableByPing()) {
@@ -39,7 +39,7 @@ public class RetrofitHelper {
 
         Response response = chain.proceed(request);
 
-        if (NetworkUtils.isAvailableByPing()) {
+          if (NetworkUtils.getWifiEnabled()||NetworkUtils.is4G()) {
             /**
              * If you have problems in testing on which side is problem (server or app).
              * You can use such feauture to set headers received from server.
@@ -75,7 +75,7 @@ public class RetrofitHelper {
                                 .readTimeout(10, TimeUnit.SECONDS)
                                 //添加拦截器
 //                                .addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)//离线缓存
-                                .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
+                                .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTO);
 
                         retrofit = new Retrofit.Builder()
                                 .client(httpBuidler.build())

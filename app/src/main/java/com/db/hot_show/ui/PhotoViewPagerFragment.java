@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.blankj.utilcode.utils.ToastUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.db.R;
 import com.db.hot_show.mvp.view.IPhotoViewPagerView;
@@ -75,6 +75,6 @@ public class PhotoViewPagerFragment extends BaseFragment implements IPhotoViewPa
     @Override
     public void showError(String message) {
         ProgressUtil.dismiss();
-        ToastUtils.showShortToast(message);
+        ToastUtils.showShort(message);
     }
 }

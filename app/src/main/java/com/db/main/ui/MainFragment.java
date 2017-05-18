@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.blankj.utilcode.utils.ToastUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.db.R;
 import com.db.demo_normal.ui.DemoNormalFragment;
 import com.db.hot_show.ui.HotShowFragment;
@@ -179,7 +179,7 @@ public class MainFragment extends BaseFragment {
     public boolean onBackPressedSupport() {
         if (System.currentTimeMillis() - exitTime > 2000) {
             exitTime = System.currentTimeMillis();
-            ToastUtils.showShortToast(getString(R.string.second_exit));
+            ToastUtils.showShort(getString(R.string.second_exit));
             return true;
         } else {
             return super.onBackPressedSupport();

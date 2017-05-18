@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blankj.utilcode.utils.SizeUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.db.R;
 import com.db.hot_show.adapter.HotShowingViewPagerAdapter;
 import com.db.util.global.FragmentAdapter;

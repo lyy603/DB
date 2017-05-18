@@ -3,9 +3,9 @@ package com.db;
 import android.app.Application;
 import android.content.Context;
 
-import com.blankj.utilcode.utils.SPUtils;
-import com.blankj.utilcode.utils.ToastUtils;
-import com.blankj.utilcode.utils.Utils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.Utils;
 import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo;
 import com.squareup.leakcanary.LeakCanary;
 
@@ -36,7 +36,6 @@ public class App extends Application {
         instance = this;
         LeakCanary.install(this);
         Utils.init(getApplicationContext());
-        ToastUtils.init(true);
         spUtils = new SPUtils(getString(R.string.app_name));
         RxPaparazzo.register(this);
     }
