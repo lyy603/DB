@@ -123,7 +123,7 @@ public class HotShowFragment extends BaseFragment {
                 //指示器下方的横线
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
                 indicator.setMode(LinePagerIndicator.MODE_MATCH_EDGE);
-                indicator.setLineHeight(SizeUtils.px2dp(15));
+                indicator.setLineHeight(SizeUtils.px2dp(8));
                 indicator.setRoundRadius(SizeUtils.px2dp(2));
                 indicator.setYOffset(SizeUtils.px2dp(10f));
                 indicator.setColors(ContextCompat.getColor(context, R.color.color_black_1));

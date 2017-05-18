@@ -110,6 +110,7 @@ public class ShowingFragment extends BaseFragment implements IShowingListView,
     public void updateRecyclerView(ShowingListBean listBean) {
         this.offset = this.offset + listBean.getCount();
         listAdapter.addData(listBean.getSubjects());
+        refresh_layout.setRefreshing(false);
         if (listBean.getCount() < API.LIMIT)
             listAdapter.loadMoreEnd(true);
         else

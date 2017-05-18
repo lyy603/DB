@@ -8,11 +8,12 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:orientation="horizontal"
         android:padding="@dimen/padding_size_small">
 
         <TextView
+            android:id="@+id/tv_address_setting"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
@@ -20,41 +21,36 @@
             android:gravity="center"
             android:text="@string/hot_showing_address_unset"
             android:textColor="@color/color_text_black"
-            android:textSize="18dp" />
+            android:textSize="15dp" />
 
-        <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:background="@drawable/common_black_border_inside"-->
-        <!--android:gravity="center">-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin_size_supersmall"
+            android:layout_toEndOf="@id/tv_address_setting"
+            android:background="@drawable/common_gray_inside_border">
 
-        <!--<TextView-->
-        <!--android:id="@+id/tv_movie"-->
-        <!--android:layout_width="65dp"-->
+            <TextView
+                android:id="@+id/tv_movie_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:drawablePadding="@dimen/padding_size_limitsmall"
+                android:drawableStart="@drawable/ic_search"
+                android:gravity="center"
+                android:text="@string/hot_showing_search_hint"
+                android:textColor="@color/color_text_subheading"
+                android:textSize="15dp" />
+
+        </FrameLayout>
+
+        <!--<ImageView-->
+        <!--android:layout_width="30dp"-->
         <!--android:layout_height="30dp"-->
-        <!--android:background="@drawable/common_black_border"-->
-        <!--android:gravity="center"-->
-        <!--android:textColor="@color/color_text_white"-->
-        <!--android:textSize="15dp" />-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/tv_cinema"-->
-        <!--android:layout_width="65dp"-->
-        <!--android:layout_height="30dp"-->
-        <!--android:gravity="center"-->
-        <!--android:textColor="@color/color_text_subheading"-->
-        <!--android:textSize="15dp" />-->
-
-        <!--</LinearLayout>-->
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_search"
-            android:contentDescription="搜索图片" />
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:background="@drawable/ic_search"-->
+        <!--android:contentDescription="搜索图片" />-->
 
     </RelativeLayout>
 
