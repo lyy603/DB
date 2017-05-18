@@ -22,7 +22,7 @@
     <color name="color_text_white">#ffffff</color>
     <color name="color_text_hint">#8f8e94</color>
     <color name="color_text_subheading">#9B9B9B</color>
-    <color name="color_text_orange">#FF7F09</color>
+    <color name="color_text_orange">#FFAD30</color>
     <color name="color_text_green">#679D11</color>
     <color name="color_text_pink">#E47485</color>
 
@@ -32,7 +32,7 @@
     <color name="color_black_1">#000000</color>
     <color name="color_black_2">#1E2535</color>
     <color name="color_black_3">#0D121A</color>
-    <color name="color_orange">#FF7F09</color>
+    <color name="color_orange">#FFAD30</color>
     <color name="color_green">#679D11</color>
     <color name="color_gray">#9B9B9B</color>
     <color name="color_pink">#E47485</color>

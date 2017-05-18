@@ -28,5 +28,6 @@
     <string name="hot_showing_buy_ticket">购票</string>
     <string name="hot_showing_director">导演：</string>
     <string name="hot_showing_leading_role">主演：</string>
+    <string name="hot_showing_collect_count">%s人看过</string>
 
 </resources>

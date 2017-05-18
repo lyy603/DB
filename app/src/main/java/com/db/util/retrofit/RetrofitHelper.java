@@ -28,7 +28,7 @@ public class RetrofitHelper {
     private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTO = chain -> {
 
         Request request = chain.request();
-        if (!NetworkUtils.isAvailableByPing()) {
+        if (!NetworkUtils.getWifiEnabled() && !NetworkUtils.is4G()) {
             CacheControl cacheControl = new CacheControl.Builder()
                     .maxStale(30, TimeUnit.SECONDS)
                     .build();
@@ -39,7 +39,7 @@ public class RetrofitHelper {
 
         Response response = chain.proceed(request);
 
-          if (NetworkUtils.getWifiEnabled()||NetworkUtils.is4G()) {
+        if (NetworkUtils.getWifiEnabled() || NetworkUtils.is4G()) {
             /**
              * If you have problems in testing on which side is problem (server or app).
              * You can use such feauture to set headers received from server.

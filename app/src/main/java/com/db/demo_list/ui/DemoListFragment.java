@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.utils.ToastUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.db.R;
@@ -154,7 +154,7 @@ public class DemoListFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     public void showError(String message) {
         ProgressUtil.dismiss();
-        ToastUtils.showShortToast(message);
+        ToastUtils.showShort(message);
     }
 
 
