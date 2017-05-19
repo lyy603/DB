@@ -1,5 +1,7 @@
 package com.db.movie_detail.mvp.presenter.impl;
 
+import android.util.Log;
+
 import com.db.API;
 import com.db.movie_detail.mvp.model.bean.MovieDetailBean;
 import com.db.movie_detail.mvp.model.bean.MovieDetailReviewsBean;
@@ -13,15 +15,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import org.reactivestreams.Publisher;
-
 import java.util.ArrayList;
 import java.util.Map;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
@@ -33,6 +31,26 @@ public class MovieDetailListPresenterImpl implements IMovieDetailListPresenter {
         this.view = view;
     }
 
+    private ArrayList<MovieDetailBean> getList(JsonObject jsonObject) {
+
+        ArrayList<MovieDetailBean> list = new ArrayList<>();
+        MovieDetailBean detailBean = new MovieDetailBean();
+
+        for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+            if (entry.getValue().isJsonArray()) {
+                JsonArray array = entry.getValue().getAsJsonArray();
+                for (JsonElement element : array) {
+                    if (entry.getKey().equals("comments"))
+                        detailBean.setShortCommentsBean((MovieDetailShortCommentsBean.CommentsBean) GsonHelper.parseJson(element, MovieDetailShortCommentsBean.CommentsBean.class));
+                    else if (entry.getKey().equals("reviews"))
+                        detailBean.setReviewsBean((MovieDetailReviewsBean.ReviewsBean) GsonHelper.parseJson(element, MovieDetailReviewsBean.ReviewsBean.class));
+                    list.add(detailBean);
+                }
+            }
+        }
+        return list;
+    }
+
     @Override
     public void getMovieDetailList(String movieId, String apikey, String start, String count) {
 
@@ -42,36 +60,18 @@ public class MovieDetailListPresenterImpl implements IMovieDetailListPresenter {
 
         Flowable<JsonObject> reviewsFlowable = retrofit.create(API.class).getReviewList(movieId, apikey, start, count);
 
-        Flowable.mergeDelayError(shortCommentsFlowable, reviewsFlowable)
+        Flowable.zip(shortCommentsFlowable, reviewsFlowable, (jsonObjectComments, jsonObjectReviews) -> {
+            ArrayList<MovieDetailBean> list = new ArrayList<>();
+            list.addAll(getList(jsonObjectComments));
+            list.addAll(getList(jsonObjectReviews));
+            return list;
+        })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(new Function<JsonObject, Publisher<ArrayList<MovieDetailBean>>>() {
-                    @Override
-                    public Publisher<ArrayList<MovieDetailBean>> apply(@NonNull JsonObject jsonObject)
-                            throws Exception {
-                        for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-                            if (entry.getValue().isJsonArray() && (entry.getKey().equals("comments")
-                                    || entry.getKey().equals("reviews"))) {
-                                JsonArray array = entry.getValue().getAsJsonArray();
-                                ArrayList<MovieDetailBean> list = new ArrayList<>();
-                                MovieDetailBean detailBean = new MovieDetailBean();
-                                for (JsonElement element : array) {
-                                    if (entry.getKey().equals("comments"))
-                                        detailBean.setShortCommentsBean((MovieDetailShortCommentsBean.CommentsBean) GsonHelper.parseJson(element, MovieDetailShortCommentsBean.CommentsBean.class));
-                                    else if (entry.getKey().equals("reviews"))
-                                        detailBean.setReviewsBean((MovieDetailReviewsBean.ReviewsBean) GsonHelper.parseJson(element, MovieDetailReviewsBean.ReviewsBean.class));
-                                    list.add(detailBean);
-                                }
-                                return Flowable.just(list);
-                            }
-                        }
-                        return null;
-                    }
-                })
                 .subscribe(new HttpSubscriber<ArrayList<MovieDetailBean>>() {
                     @Override
                     public void _onNext(ArrayList<MovieDetailBean> movieDetailBeen) {
-
+                        Log.i("lin", "_onNext: ");
                     }
 
                     @Override
@@ -79,26 +79,41 @@ public class MovieDetailListPresenterImpl implements IMovieDetailListPresenter {
 
                     }
                 });
-//        RetrofitHelper.getRetrofitHelper().create(API.class)
-//                .getReviewList(apikey, start, count)
-//                .subscribeOn(Schedulers.io())
-//                .flatMap(new Function<JsonObject, Publisher<MovieDetailReviewsBean>>() {
+//                .flatMap(new Function<JsonObject, Publisher<ArrayList<MovieDetailBean>>>() {
 //                    @Override
-//                    public Publisher<MovieDetailReviewsBean> apply(@NonNull JsonObject jsonObject) throws Exception {
-//                        MovieDetailReviewsBean bean = (MovieDetailReviewsBean) GsonHelper.parseJson(jsonObject, MovieDetailReviewsBean.class);
-//                        return Flowable.just(bean);
+//                    public Publisher<ArrayList<MovieDetailBean>> apply(@NonNull JsonObject jsonObject)
+//                            throws Exception {
+//                        for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+//                            if (entry.getValue().isJsonArray() && (entry.getKey().equals("comments")
+//                                    || entry.getKey().equals("reviews"))) {
+//
+//                                JsonArray array = entry.getValue().getAsJsonArray();
+//                                ArrayList<MovieDetailBean> list = new ArrayList<>();
+//                                MovieDetailBean detailBean = new MovieDetailBean();
+//
+//                                for (JsonElement element : array) {
+//                                    if (entry.getKey().equals("comments"))
+//                                        detailBean.setShortCommentsBean((MovieDetailShortCommentsBean.CommentsBean) GsonHelper.parseJson(element, MovieDetailShortCommentsBean.CommentsBean.class));
+//                                    else if (entry.getKey().equals("reviews"))
+//                                        detailBean.setReviewsBean((MovieDetailReviewsBean.ReviewsBean) GsonHelper.parseJson(element, MovieDetailReviewsBean.ReviewsBean.class));
+//                                    list.add(detailBean);
+//                                }
+//
+//                                return Flowable.just(list);
+//                            }
+//                        }
+//                        return null;
 //                    }
 //                })
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new HttpSubscriber<MovieDetailReviewsBean>() {
+//                .subscribe(new HttpSubscriber<ArrayList<MovieDetailBean>>() {
 //                    @Override
-//                    public void _onNext(MovieDetailReviewsBean showingListBean) {
-//                        view.updateRecyclerView(showingListBean);
+//                    public void _onNext(ArrayList<MovieDetailBean> movieDetailBeen) {
+//                        Log.i("lin", "_onNext: ");
 //                    }
 //
 //                    @Override
 //                    public void _onError(String message) {
-//                        view.showError(message);
+//
 //                    }
 //                });
     }
