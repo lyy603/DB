@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.db.API;
 import com.db.R;
 import com.db.hot_show.adapter.ShowingListAdapter;
@@ -21,11 +22,15 @@ import com.db.hot_show.mvp.model.bean.ShowingListBean;
 import com.db.hot_show.mvp.presenter.impl.ShowingListPresenterImpl;
 import com.db.hot_show.mvp.view.IIsChildRequestScrollListener;
 import com.db.hot_show.mvp.view.IShowingListView;
+import com.db.main.ui.MainFragment;
+import com.db.movie_detail.ui.MovieDetailFragment;
 import com.db.widget.fragment.BaseFragment;
 import com.db.widget.recyclerview.CustomLoadMoreView;
 import com.db.widget.recyclerview.animation.CustomAnimation;
 
 import java.util.ArrayList;
+
+import me.yokeyword.fragmentation.SupportFragment;
 
 public class ShowingFragment extends BaseFragment implements IShowingListView,
         BaseQuickAdapter.RequestLoadMoreListener, IIsChildRequestScrollListener,
@@ -45,6 +50,12 @@ public class ShowingFragment extends BaseFragment implements IShowingListView,
 
     //请求列表的第一个数据的位置
     private int offset = 0;
+
+    private String movieId = "0";
+
+    private ArrayList<ShowingListBean.SubjectsBean> list = new ArrayList<>();
+
+    private ShowingListBean.SubjectsBean subjectsBean;
 
     public static ShowingFragment newInstance() {
         return newInstance("");
@@ -81,6 +92,8 @@ public class ShowingFragment extends BaseFragment implements IShowingListView,
 
     private void initView() {
 
+        refresh_layout.setRefreshing(true);
+
         //初始化MVP
         presenter = new ShowingListPresenterImpl(this);
 
@@ -89,7 +102,7 @@ public class ShowingFragment extends BaseFragment implements IShowingListView,
         refresh_layout.setOnRefreshListener(this);
 
         //初始化recyclerview
-        listAdapter = new ShowingListAdapter(new ArrayList<>());
+        listAdapter = new ShowingListAdapter(list);
         listAdapter.openLoadAnimation(new CustomAnimation());
         listAdapter.setAutoLoadMoreSize(API.LIMIT);//加载更多的触发条件
         listAdapter.setOnLoadMoreListener(this, recycler_view);//加载更多回调监听
@@ -98,7 +111,32 @@ public class ShowingFragment extends BaseFragment implements IShowingListView,
         recycler_view.setLayoutManager(new LinearLayoutManager(context));
         recycler_view.setAdapter(listAdapter);
         recycler_view.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
+        recycler_view.addOnItemTouchListener(new SimpleClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                subjectsBean = (ShowingListBean.SubjectsBean) adapter.getItem(position);
+                if (subjectsBean != null) {
+                    SupportFragment hotShowFragment = (HotShowFragment) getParentFragment();
+                    SupportFragment mainFragment = (MainFragment) hotShowFragment.getParentFragment();
+                    mainFragment.start(MovieDetailFragment.newInstance(subjectsBean.getId()));
+                }
+            }
 
+            @Override
+            public void onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+
+            @Override
+            public void onItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+        });
     }
 
     @Override
