@@ -19,10 +19,10 @@ public class RatingDrawable extends LayerDrawable {
 
     public RatingDrawable(Context context) {
         super(new Drawable[] {
-                createLayerDrawable(R.drawable.mrb_star_border_icon_black_36dp, false, context),
-                createClippedLayerDrawable(R.drawable.mrb_star_border_icon_black_36dp, true,
+                createLayerDrawable(R.drawable.ic_star_border, false, context),
+                createClippedLayerDrawable(R.drawable.ic_star_border, true,
                         context),
-                createClippedLayerDrawable(R.drawable.mrb_star_icon_black_36dp, true, context)
+                createClippedLayerDrawable(R.drawable.ic_star, true, context)
         });
 
         setId(0, android.R.id.background);

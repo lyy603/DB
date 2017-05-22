@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.db.R;
 import com.db.hot_show.mvp.model.bean.ShowingListBean;
+import com.db.widget.rating_bar.MaterialRatingBar;
 
 import java.util.List;
 
@@ -15,12 +16,16 @@ public class ShowingListAdapter extends BaseQuickAdapter<ShowingListBean.Subject
 
     private String director = "", leading_role = "";
 
+    private MaterialRatingBar ratingBar;
+
     public ShowingListAdapter(List<ShowingListBean.SubjectsBean> data) {
         super(R.layout.item_showing_list_layout, data);
     }
 
     @Override
     protected void convert(BaseViewHolder viewHolder, ShowingListBean.SubjectsBean bean) {
+
+        ratingBar = viewHolder.getView(R.id.rating_bar);
 
         director = mContext.getString(R.string.hot_showing_director);
         leading_role = mContext.getString(R.string.hot_showing_leading_role);
@@ -39,11 +44,14 @@ public class ShowingListAdapter extends BaseQuickAdapter<ShowingListBean.Subject
             leading_role = leading_role + bean.getCasts().get(i).getName();
         }
 
+        ratingBar.setRating((float) bean.getRating().getAverage() / 2);
+
         viewHolder.setText(R.id.tv_title, bean.getTitle())
                 .setText(R.id.tv_director, director)
                 .setText(R.id.tv_leading_role, leading_role)
-                .setText(R.id.btn_buy, mContext.getString(R.string.hot_showing_buy_ticket))
+                .setText(R.id.tv_point, bean.getRating().getAverage() + "")
                 .setText(R.id.tv_see_number, mContext.getString(R.string.hot_showing_collect_count, bean.getCollect_count() + ""))
+                .setText(R.id.btn_buy, mContext.getString(R.string.hot_showing_buy_ticket))
                 .addOnClickListener(R.id.btn_buy);
 
         Glide.with(mContext)
