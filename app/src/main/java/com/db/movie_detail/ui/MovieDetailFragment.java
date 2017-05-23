@@ -3,16 +3,22 @@ package com.db.movie_detail.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.db.R;
+import com.db.movie_detail.adapter.MovieDetailListAdapter;
 import com.db.movie_detail.mvp.model.bean.MovieDetailBean;
 import com.db.movie_detail.mvp.presenter.impl.MovieDetailListPresenterImpl;
 import com.db.movie_detail.mvp.view.IMovieDetailListView;
 import com.db.widget.fragment.BaseFragment;
+import com.db.widget.recyclerview.animation.CustomAnimation;
+
+import java.util.ArrayList;
 
 public class MovieDetailFragment extends BaseFragment implements IMovieDetailListView {
 
@@ -21,6 +27,8 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
     private RecyclerView recycler_view;
 
     private MovieDetailListPresenterImpl presenter;
+
+    private MovieDetailListAdapter listAdapter;
 
     private Context context;
 
@@ -66,15 +74,20 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
         presenter = new MovieDetailListPresenterImpl(this);
 
         //设置RecyclerView
-    }
+        listAdapter = new MovieDetailListAdapter(new ArrayList<>());
+        listAdapter.openLoadAnimation(new CustomAnimation());
 
-    @Override
-    public void updateRecyclerView(MovieDetailBean listBean) {
-
+        recycler_view.setLayoutManager(new LinearLayoutManager(context));
+        recycler_view.setAdapter(listAdapter);
     }
 
     @Override
     public void showError(String message) {
+        ToastUtils.showShort(message);
+    }
 
+    @Override
+    public void updateRecyclerView(ArrayList<MovieDetailBean> list) {
+        listAdapter.addData(list);
     }
 }

@@ -12,6 +12,9 @@
     <string name="error_grant">部分所需权限请求被拒绝，程序可能会出现崩溃！</string>
     <string name="demo_empty">是空的哦</string>
 
+    <!--图片解释-->
+    <string name="img_src_head">头像</string>
+
     <!--预览图片-->
     <string name="gallery">预览图片</string>
     <string name="loadmore_end">所有数据加载完成</string>

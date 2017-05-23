@@ -1,7 +1,5 @@
 package com.db.movie_detail.mvp.presenter.impl;
 
-import android.util.Log;
-
 import com.db.API;
 import com.db.movie_detail.mvp.model.bean.MovieDetailBean;
 import com.db.movie_detail.mvp.model.bean.MovieDetailReviewsBean;
@@ -34,12 +32,12 @@ public class MovieDetailListPresenterImpl implements IMovieDetailListPresenter {
     private ArrayList<MovieDetailBean> getList(JsonObject jsonObject) {
 
         ArrayList<MovieDetailBean> list = new ArrayList<>();
-        MovieDetailBean detailBean = new MovieDetailBean();
 
         for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
             if (entry.getValue().isJsonArray()) {
                 JsonArray array = entry.getValue().getAsJsonArray();
                 for (JsonElement element : array) {
+                    MovieDetailBean detailBean = new MovieDetailBean();
                     if (entry.getKey().equals("comments"))
                         detailBean.setShortCommentsBean((MovieDetailShortCommentsBean.CommentsBean) GsonHelper.parseJson(element, MovieDetailShortCommentsBean.CommentsBean.class));
                     else if (entry.getKey().equals("reviews"))
@@ -71,12 +69,12 @@ public class MovieDetailListPresenterImpl implements IMovieDetailListPresenter {
                 .subscribe(new HttpSubscriber<ArrayList<MovieDetailBean>>() {
                     @Override
                     public void _onNext(ArrayList<MovieDetailBean> movieDetailBeen) {
-                        Log.i("lin", "_onNext: ");
+                        view.updateRecyclerView(movieDetailBeen);
                     }
 
                     @Override
                     public void _onError(String message) {
-
+                        view.showError(message);
                     }
                 });
 //                .flatMap(new Function<JsonObject, Publisher<ArrayList<MovieDetailBean>>>() {
