@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.utils.ToastUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.db.R;
 import com.db.demo_normal.mvp.presenter.impl.DemoNormalPresenterImpl;
 import com.db.demo_normal.mvp.view.IDemoNormalView;
@@ -79,7 +79,7 @@ public class DemoNormalFragment extends BaseFragment implements IDemoNormalView 
     @Override
     public void showError(String message) {
         ProgressUtil.dismiss();
-        ToastUtils.showShortToast(message);
+        ToastUtils.showShort(message);
     }
 
     @OnClick({R.id.toolbar_iv_back})
