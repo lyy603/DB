@@ -33,4 +33,8 @@
     <string name="hot_showing_leading_role">主演：</string>
     <string name="hot_showing_collect_count">%s人看过</string>
 
+    <!--影片详情-->
+    <string name="movie_detail_want_see">想看</string>
+    <string name="movie_detail_had_see">看过</string>
+
 </resources>

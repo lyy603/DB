@@ -14,6 +14,7 @@ import retrofit2.http.Query;
 public interface API {
     int LIMIT = 20;
 
+    //热映列表
     @GET("in_theaters")
     Flowable<JsonObject> getShowingList(
             @Query("apikey") String apikey,
@@ -37,4 +38,12 @@ public interface API {
             @Query("start") String start,
             @Query("count") String count
     );
+
+    @GET("subject/{movie_id}")
+    Flowable<JsonObject> getMovieDetail(
+            @Path("movie_id") String movie_id,
+            @Query("apikey") String apikey,
+            @Query("city") String city
+    );
+
 }
