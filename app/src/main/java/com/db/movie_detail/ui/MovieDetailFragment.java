@@ -33,7 +33,7 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
 
     private ImageView iv_movie;
 
-    private FrameLayout flImg;
+    private FrameLayout fl_img;
 
     private View header;
 
@@ -98,15 +98,20 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
 
         recycler_view.setLayoutManager(new LinearLayoutManager(context));
         recycler_view.setAdapter(listAdapter);
+
+        //其他设置
+//        FreeHandViewUtil.setViewSize(fl_img, ScreenUtils.getScreenWidth(), ScreenUtils.getScreenWidth());
     }
 
     private void initHeader(View header) {
+        fl_img = (FrameLayout) header.findViewById(R.id.fl_img);
         iv_movie = (ImageView) header.findViewById(R.id.iv_movie);
         tv_movie_src = (TextView) header.findViewById(R.id.tv_movie_src);
         tv_movie_name = (TextView) header.findViewById(R.id.tv_movie_name);
         tv_movie_date = (TextView) header.findViewById(R.id.tv_movie_date);
         tv_movie_time = (TextView) header.findViewById(R.id.tv_movie_time);
         tv_movie_title = (TextView) header.findViewById(R.id.tv_movie_title);
+
     }
 
     @Override

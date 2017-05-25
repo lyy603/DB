@@ -57,8 +57,8 @@
             android:id="@+id/tv_point"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10dp"
-            android:layout_marginLeft="@dimen/margin_size_supersmall" />
+            android:layout_marginLeft="@dimen/margin_size_supersmall"
+            android:textSize="10dp" />
 
     </LinearLayout>
 
@@ -67,6 +67,7 @@
         style="@style/CommonTextView"
         android:layout_alignStart="@+id/tv_title"
         android:layout_below="@+id/ll_rating"
+        android:textColor="@color/color_text_subheading"
         android:textSize="12dp" />
 
     <!--<TextView-->

@@ -36,5 +36,7 @@
     <!--影片详情-->
     <string name="movie_detail_want_see">想看</string>
     <string name="movie_detail_had_see">看过</string>
+    <string name="movie_detail_buy_ticket">选座购票</string>
+    <string name="movie_detail_buy_ticket_price">￥%s起</string>
 
 </resources>

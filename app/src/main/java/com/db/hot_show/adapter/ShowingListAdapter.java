@@ -31,11 +31,11 @@ public class ShowingListAdapter extends BaseQuickAdapter<ShowingListBean.Subject
         leading_role = mContext.getString(R.string.hot_showing_leading_role);
 
         //拼接导演名称
-        for (int i = 0; i < bean.getDirectors().size(); i++) {
-            if (i != 0)
-                director = director + "/";
-            director = director + bean.getDirectors().get(i).getName();
-        }
+//        for (int i = 0; i < bean.getDirectors().size(); i++) {
+//            if (i != 0)
+//                director = director + "/";
+//            director = director + bean.getDirectors().get(i).getName();
+//        }
 
         //拼接主演名称
         for (int i = 0; i < bean.getCasts().size(); i++) {
@@ -47,7 +47,7 @@ public class ShowingListAdapter extends BaseQuickAdapter<ShowingListBean.Subject
         ratingBar.setRating((float) bean.getRating().getAverage() / 2);
 
         viewHolder.setText(R.id.tv_title, bean.getTitle())
-                .setText(R.id.tv_director, director)
+                .setText(R.id.tv_director, director + bean.getDirectors().get(0).getName())
                 .setText(R.id.tv_leading_role, leading_role)
                 .setText(R.id.tv_point, bean.getRating().getAverage() + "")
                 .setText(R.id.tv_see_number, mContext.getString(R.string.hot_showing_collect_count, bean.getCollect_count() + ""))
