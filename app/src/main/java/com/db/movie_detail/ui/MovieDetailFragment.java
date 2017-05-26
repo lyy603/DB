@@ -15,9 +15,11 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.db.R;
+import com.db.movie_detail.adapter.MovieDetailFilmMakerListAdapter;
 import com.db.movie_detail.adapter.MovieDetailListAdapter;
 import com.db.movie_detail.mvp.model.bean.MovieDetailBean;
 import com.db.movie_detail.mvp.model.bean.MovieDetailListBean;
+import com.db.movie_detail.mvp.model.bean.PersonDetailBean;
 import com.db.movie_detail.mvp.presenter.impl.MovieDetailListPresenterImpl;
 import com.db.movie_detail.mvp.view.IMovieDetailListView;
 import com.db.widget.ExpandableTextView;
@@ -25,6 +27,7 @@ import com.db.widget.fragment.BaseFragment;
 import com.db.widget.recyclerview.animation.CustomAnimation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieDetailFragment extends BaseFragment implements IMovieDetailListView {
 
@@ -40,9 +43,11 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
 
     private View header;
 
-    private RecyclerView recycler_view;
+    private RecyclerView recycler_view, film_maker_recycler_view;
 
     private MovieDetailListPresenterImpl presenter;
+
+    private MovieDetailFilmMakerListAdapter filmMakerListAdapter;
 
     private MovieDetailListAdapter listAdapter;
 
@@ -69,13 +74,14 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
         recycler_view = (RecyclerView) view.findViewById(R.id.rl_movie_detail);
         header = getActivity().getLayoutInflater()
                 .inflate(R.layout.item_movie_detail_header, (ViewGroup) recycler_view.getParent(), false);
-        initHeader(header);
 
         context = view.getContext();
 
         movieId = getArguments().getString(KEY);
 
         initView();
+
+        initHeader(header);
 
         return view;
     }
@@ -114,8 +120,12 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
         tv_movie_date = (TextView) header.findViewById(R.id.tv_movie_date);
         tv_movie_time = (TextView) header.findViewById(R.id.tv_movie_time);
         tv_movie_title = (TextView) header.findViewById(R.id.tv_movie_title);
+        film_maker_recycler_view = (RecyclerView) header.findViewById(R.id.rv_filmmaker);
         summary_content = (ExpandableTextView) header.findViewById(R.id.tv_summary_content);
 
+        filmMakerListAdapter = new MovieDetailFilmMakerListAdapter(new ArrayList<>());
+        film_maker_recycler_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        film_maker_recycler_view.setAdapter(filmMakerListAdapter);
     }
 
     @Override
@@ -142,5 +152,11 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
         tv_movie_name.setText(item.getOriginal_title());
         tv_movie_time.setText(item.getDurations().get(0));
         summary_content.setText(item.getSummary());
+
+        List<PersonDetailBean> list = new ArrayList<>();
+        list.addAll(item.getDirectors());
+        list.addAll(item.getCasts());
+        filmMakerListAdapter.setDirectorSize(item.getDirectors().size());
+        filmMakerListAdapter.setNewData(list);
     }
 }

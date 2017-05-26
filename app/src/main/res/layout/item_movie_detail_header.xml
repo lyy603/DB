@@ -148,4 +148,19 @@
         app:etv_ToExpandHintColor="@color/color_text_green"
         app:etv_ToShrinkHintShow="false" />
 
+    <TextView
+        android:id="@+id/tv_filmmaker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/tv_movie_title"
+        android:layout_below="@+id/tv_summary_content"
+        android:layout_marginTop="@dimen/margin_size_medium" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_filmmaker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tv_movie_title"
+        android:layout_below="@+id/tv_filmmaker" />
+
 </RelativeLayout>

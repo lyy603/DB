@@ -157,7 +157,7 @@ public class MovieDetailBean {
      * id : 1340984
      */
 
-    private List<CastsBean> casts;
+    private List<PersonDetailBean> casts;
     private List<String> countries;
     /**
      * thumb : http://img7.doubanio.com/view/photo/thumb/public/p2406383762.webp
@@ -178,7 +178,7 @@ public class MovieDetailBean {
      * id : 1360707
      */
 
-    private List<DirectorsBean> directors;
+    private List<PersonDetailBean> directors;
     /**
      * rating : {"max":5,"value":1,"min":0}
      * title : 国产恐怖片，注定成烂片？
@@ -536,11 +536,11 @@ public class MovieDetailBean {
         this.clip_urls = clip_urls;
     }
 
-    public List<CastsBean> getCasts() {
+    public List<PersonDetailBean> getCasts() {
         return casts;
     }
 
-    public void setCasts(List<CastsBean> casts) {
+    public void setCasts(List<PersonDetailBean> casts) {
         this.casts = casts;
     }
 
@@ -568,11 +568,11 @@ public class MovieDetailBean {
         this.clips = clips;
     }
 
-    public List<DirectorsBean> getDirectors() {
+    public List<PersonDetailBean> getDirectors() {
         return directors;
     }
 
-    public void setDirectors(List<DirectorsBean> directors) {
+    public void setDirectors(List<PersonDetailBean> directors) {
         this.directors = directors;
     }
 
