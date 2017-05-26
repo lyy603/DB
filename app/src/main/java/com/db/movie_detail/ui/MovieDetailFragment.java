@@ -20,6 +20,7 @@ import com.db.movie_detail.mvp.model.bean.MovieDetailBean;
 import com.db.movie_detail.mvp.model.bean.MovieDetailListBean;
 import com.db.movie_detail.mvp.presenter.impl.MovieDetailListPresenterImpl;
 import com.db.movie_detail.mvp.view.IMovieDetailListView;
+import com.db.widget.ExpandableTextView;
 import com.db.widget.fragment.BaseFragment;
 import com.db.widget.recyclerview.animation.CustomAnimation;
 
@@ -30,6 +31,8 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
     private static final String KEY = "movie_detail";
 
     private TextView tv_movie_title, tv_movie_src, tv_movie_name, tv_movie_date, tv_movie_time, tvWantSee, tvHadSee;
+
+    private ExpandableTextView summary_content;
 
     private ImageView iv_movie;
 
@@ -111,6 +114,7 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
         tv_movie_date = (TextView) header.findViewById(R.id.tv_movie_date);
         tv_movie_time = (TextView) header.findViewById(R.id.tv_movie_time);
         tv_movie_title = (TextView) header.findViewById(R.id.tv_movie_title);
+        summary_content = (ExpandableTextView) header.findViewById(R.id.tv_summary_content);
 
     }
 
@@ -137,5 +141,6 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
         tv_movie_src.setText(item.getGenres().get(0));
         tv_movie_name.setText(item.getOriginal_title());
         tv_movie_time.setText(item.getDurations().get(0));
+        summary_content.setText(item.getSummary());
     }
 }
