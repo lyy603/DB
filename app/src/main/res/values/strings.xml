@@ -43,5 +43,10 @@
     <string name="movie_detail_buy_ticket">选座购票</string>
     <string name="movie_detail_buy_ticket_price">￥%s起</string>
     <string name="movie_detail_summary">简介</string>
+    <string name="movie_detail_original_name">原名：%s</string>
+    <string name="movie_detail_pubdate">上映时间：%s</string>
+    <string name="movie_detail_durations">片长：%s</string>
+    <string name="movie_detail_score">豆瓣评分</string>
+    <string name="movie_detail_rating_count">%s人</string>
 
 </resources>

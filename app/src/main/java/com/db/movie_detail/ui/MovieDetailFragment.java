@@ -3,6 +3,7 @@ package com.db.movie_detail.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,13 +34,16 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
 
     private static final String KEY = "movie_detail";
 
-    private TextView tv_movie_title, tv_movie_src, tv_movie_name, tv_movie_date, tv_movie_time, tvWantSee, tvHadSee;
+    private TextView tv_movie_title, tv_movie_src, tv_movie_name, tv_movie_date, tv_movie_time,
+            tvWantSee, tv_rating_count, tv_avg_rating;
 
     private ExpandableTextView summary_content;
 
     private ImageView iv_movie;
 
     private FrameLayout fl_img;
+
+    private CardView cv_rating;
 
     private View header;
 
@@ -109,17 +113,20 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
         recycler_view.setAdapter(listAdapter);
 
         //其他设置
-//        FreeHandViewUtil.setViewSize(fl_img, ScreenUtils.getScreenWidth(), ScreenUtils.getScreenWidth());
+//        FreeHandViewUtil.setViewSize(cv_rating, cv_rating.getHeight(), cv_rating.getHeight());
     }
 
     private void initHeader(View header) {
         fl_img = (FrameLayout) header.findViewById(R.id.fl_img);
         iv_movie = (ImageView) header.findViewById(R.id.iv_movie);
+        cv_rating = (CardView) header.findViewById(R.id.cv_rating);
         tv_movie_src = (TextView) header.findViewById(R.id.tv_movie_src);
+        tv_avg_rating = (TextView) header.findViewById(R.id.tv_avg_rating);
         tv_movie_name = (TextView) header.findViewById(R.id.tv_movie_name);
         tv_movie_date = (TextView) header.findViewById(R.id.tv_movie_date);
         tv_movie_time = (TextView) header.findViewById(R.id.tv_movie_time);
         tv_movie_title = (TextView) header.findViewById(R.id.tv_movie_title);
+        tv_rating_count = (TextView) header.findViewById(R.id.tv_rating_count);
         film_maker_recycler_view = (RecyclerView) header.findViewById(R.id.rv_filmmaker);
         summary_content = (ExpandableTextView) header.findViewById(R.id.tv_summary_content);
 
@@ -140,18 +147,27 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
 
     @Override
     public void updateMovieDetail(MovieDetailBean item) {
+
+        String genres = item.getYear();
+
+        for (String s : item.getGenres()) {
+            genres = genres + "/" + s;
+        }
+
         Glide.with(context)
                 .load(item.getImages().getLarge())
                 .centerCrop()
                 .crossFade()
                 .into(iv_movie);
 
+        tv_movie_src.setText(genres);
         tv_movie_title.setText(item.getTitle());
-        tv_movie_date.setText(item.getPubdate());
-        tv_movie_src.setText(item.getGenres().get(0));
-        tv_movie_name.setText(item.getOriginal_title());
-        tv_movie_time.setText(item.getDurations().get(0));
         summary_content.setText(item.getSummary());
+        tv_avg_rating.setText(item.getRating().getAverage() + "");
+        tv_movie_date.setText(getString(R.string.movie_detail_pubdate, item.getPubdate()));
+        tv_movie_time.setText(getString(R.string.movie_detail_durations, item.getDurations().get(0)));
+        tv_movie_name.setText(getString(R.string.movie_detail_original_name, item.getOriginal_title()));
+        tv_rating_count.setText(getString(R.string.movie_detail_rating_count, item.getRatings_count() + ""));
 
         List<PersonDetailBean> list = new ArrayList<>();
         list.addAll(item.getDirectors());
