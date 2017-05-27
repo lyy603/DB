@@ -60,6 +60,7 @@
                 tools:text="7.5" />
 
             <com.db.widget.rating_bar.MaterialRatingBar
+                android:id="@+id/mrb_avg_rating"
                 style="@style/Widget.MaterialRatingBar.RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -136,7 +137,7 @@
         android:layout_alignStart="@+id/tv_movie_title"
         android:layout_below="@+id/tv_movie_time"
         android:layout_marginEnd="@dimen/margin_size_min"
-        android:layout_marginTop="@dimen/margin_size_medium">
+        android:layout_marginTop="@dimen/margin_size_large">
 
         <TextView
             android:id="@+id/tv_want_see"
@@ -178,6 +179,7 @@
             android:text="@string/movie_detail_buy_ticket" />
 
         <TextView
+            android:id="@+id/tv_ticket_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_arrow_right"
@@ -213,6 +215,7 @@
         android:layout_below="@+id/tv_summary"
         android:textSize="15dp"
         app:etv_EllipsisHint="..."
+        app:etv_MaxLinesOnShrink="4"
         app:etv_ToExpandHintColor="@color/color_text_green"
         app:etv_ToShrinkHintShow="false" />
 
@@ -222,12 +225,14 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@id/tv_movie_title"
         android:layout_below="@+id/tv_summary_content"
+        android:text="@string/movie_detail_film_maker"
         android:layout_marginTop="@dimen/margin_size_medium" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_filmmaker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_size_small"
         android:layout_alignStart="@+id/tv_movie_title"
         android:layout_below="@+id/tv_filmmaker" />
 

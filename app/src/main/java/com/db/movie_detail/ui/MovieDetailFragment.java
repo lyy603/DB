@@ -25,6 +25,7 @@ import com.db.movie_detail.mvp.presenter.impl.MovieDetailListPresenterImpl;
 import com.db.movie_detail.mvp.view.IMovieDetailListView;
 import com.db.widget.ExpandableTextView;
 import com.db.widget.fragment.BaseFragment;
+import com.db.widget.rating_bar.MaterialRatingBar;
 import com.db.widget.recyclerview.animation.CustomAnimation;
 
 import java.util.ArrayList;
@@ -35,9 +36,11 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
     private static final String KEY = "movie_detail";
 
     private TextView tv_movie_title, tv_movie_src, tv_movie_name, tv_movie_date, tv_movie_time,
-            tvWantSee, tv_rating_count, tv_avg_rating;
+            tv_ticket_price, tv_rating_count, tv_avg_rating;
 
     private ExpandableTextView summary_content;
+
+    private MaterialRatingBar mrb_avg_rating;
 
     private ImageView iv_movie;
 
@@ -127,6 +130,8 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
         tv_movie_time = (TextView) header.findViewById(R.id.tv_movie_time);
         tv_movie_title = (TextView) header.findViewById(R.id.tv_movie_title);
         tv_rating_count = (TextView) header.findViewById(R.id.tv_rating_count);
+        tv_ticket_price = (TextView) header.findViewById(R.id.tv_ticket_price);
+        mrb_avg_rating = (MaterialRatingBar) header.findViewById(R.id.mrb_avg_rating);
         film_maker_recycler_view = (RecyclerView) header.findViewById(R.id.rv_filmmaker);
         summary_content = (ExpandableTextView) header.findViewById(R.id.tv_summary_content);
 
@@ -164,10 +169,13 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
         tv_movie_title.setText(item.getTitle());
         summary_content.setText(item.getSummary());
         tv_avg_rating.setText(item.getRating().getAverage() + "");
+        tv_ticket_price.setText(getString(R.string.movie_detail_buy_ticket_price, "23"));
         tv_movie_date.setText(getString(R.string.movie_detail_pubdate, item.getPubdate()));
         tv_movie_time.setText(getString(R.string.movie_detail_durations, item.getDurations().get(0)));
         tv_movie_name.setText(getString(R.string.movie_detail_original_name, item.getOriginal_title()));
         tv_rating_count.setText(getString(R.string.movie_detail_rating_count, item.getRatings_count() + ""));
+
+        mrb_avg_rating.setRating((float) (item.getRating().getAverage() / 2));
 
         List<PersonDetailBean> list = new ArrayList<>();
         list.addAll(item.getDirectors());
