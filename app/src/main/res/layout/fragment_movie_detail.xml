@@ -14,7 +14,7 @@
         android:id="@+id/ll_movie_detail_toolbar"
         android:layout_width="match_parent"
         android:layout_height="58dp"
-        android:background="@color/color_black_1"
+        android:background="@color/transparent"
         android:padding="@dimen/padding_size_small">
 
         <ImageView

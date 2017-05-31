@@ -22,8 +22,11 @@ public class RootActivity extends BaseActivity {
 
     @Override
     public void onBackPressedSupport() {
-        super.onBackPressedSupport();
-        if (!(getSupportFragmentManager().getBackStackEntryCount() > 1))
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            pop();
+        } else {
+            finish();
             android.os.Process.killProcess(android.os.Process.myPid());
+        }
     }
 }
