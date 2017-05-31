@@ -7,6 +7,7 @@
 
     <FrameLayout
         android:id="@+id/fl_img"
+        android:background="@color/color_black_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -16,7 +17,7 @@
             android:layout_height="238dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/margin_size_medium"
-            android:layout_marginTop="63dp" />
+            android:layout_marginTop="55dp" />
 
     </FrameLayout>
 
@@ -88,6 +89,7 @@
         android:layout_below="@+id/fl_img"
         android:layout_marginEnd="@dimen/margin_size_medium"
         android:layout_marginStart="@dimen/margin_size_medium"
+        android:layout_marginTop="@dimen/margin_size_small"
         android:layout_toStartOf="@+id/cv_rating"
         android:textColor="@color/color_black_1"
         android:textSize="23dp"

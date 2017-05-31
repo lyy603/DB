@@ -1,8 +1,10 @@
 package com.db.movie_detail.ui;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.db.R;
 import com.db.movie_detail.adapter.MovieDetailFilmMakerListAdapter;
 import com.db.movie_detail.adapter.MovieDetailListAdapter;
@@ -159,11 +163,29 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
             genres = genres + "/" + s;
         }
 
+//        Glide.with(context)
+//                .load(item.getImages().getLarge())
+//                .centerCrop()
+//                .crossFade()
+//                .into(iv_movie);
+
         Glide.with(context)
                 .load(item.getImages().getLarge())
-                .centerCrop()
-                .crossFade()
-                .into(iv_movie);
+                .asBitmap()
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        // Palette的部分
+                        Palette.Builder builder = Palette.from(resource);
+                        builder.generate(palette -> {
+                            //获取到充满活力的这种色调
+                            Palette.Swatch vibrant = palette.getVibrantSwatch();
+                            //根据调色板Palette获取到图片中的颜色设置到toolbar和tab中背景，标题等，使整个UI界面颜色统一
+                            fl_img.setBackgroundColor(vibrant != null ? vibrant.getRgb() : 0);
+                            iv_movie.setImageBitmap(resource);
+                        });
+                    }
+                });
 
         tv_movie_src.setText(genres);
         tv_movie_title.setText(item.getTitle());
