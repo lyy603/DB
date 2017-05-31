@@ -49,5 +49,6 @@
     <string name="movie_detail_score">豆瓣评分</string>
     <string name="movie_detail_rating_count">%s人</string>
     <string name="movie_detail_film_maker">影人</string>
+    <string name="movie_detail_title">电影</string>
 
 </resources>

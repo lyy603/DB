@@ -11,8 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -40,7 +42,7 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
     private static final String KEY = "movie_detail";
 
     private TextView tv_movie_title, tv_movie_src, tv_movie_name, tv_movie_date, tv_movie_time,
-            tv_ticket_price, tv_rating_count, tv_avg_rating;
+            tv_ticket_price, tv_rating_count, tv_avg_rating, tv_title;
 
     private ExpandableTextView summary_content;
 
@@ -49,6 +51,8 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
     private ImageView iv_movie;
 
     private FrameLayout fl_img;
+
+    private LinearLayout ll_toolbar, ll_background;
 
     private CardView cv_rating;
 
@@ -66,6 +70,16 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
 
     private String movieId = "0";
 
+    //标题改变的滑动高度
+    private int changeHeight;
+
+    //已经滑动的距离
+    private int mDistance = 0;
+
+    private int bg_rgb;
+
+    private String title;
+
     public static MovieDetailFragment newInstance() {
         return newInstance("");
     }
@@ -82,7 +96,11 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
+
+        tv_title = (TextView) view.findViewById(R.id.tv_title);
         recycler_view = (RecyclerView) view.findViewById(R.id.rl_movie_detail);
+        ll_toolbar = (LinearLayout) view.findViewById(R.id.ll_movie_detail_toolbar);
+        ll_background = (LinearLayout) view.findViewById(R.id.ll_background);
         header = getActivity().getLayoutInflater()
                 .inflate(R.layout.item_movie_detail_header, (ViewGroup) recycler_view.getParent(), false);
 
@@ -93,6 +111,8 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
         initView();
 
         initHeader(header);
+
+        initListener();
 
         return view;
     }
@@ -120,7 +140,7 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
         recycler_view.setAdapter(listAdapter);
 
         //其他设置
-//        FreeHandViewUtil.setViewSize(cv_rating, cv_rating.getHeight(), cv_rating.getHeight());
+        tv_title.setText(R.string.movie_detail_title);
     }
 
     private void initHeader(View header) {
@@ -142,6 +162,38 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
         filmMakerListAdapter = new MovieDetailFilmMakerListAdapter(new ArrayList<>());
         film_maker_recycler_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         film_maker_recycler_view.setAdapter(filmMakerListAdapter);
+    }
+
+    private void initListener() {
+        ViewTreeObserver vto = iv_movie.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                changeHeight = tv_movie_src.getTop();
+                iv_movie.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                recycler_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                        super.onScrolled(recyclerView, dx, dy);
+                        mDistance += dy;
+                        if (mDistance > 0 && mDistance < fl_img.getBottom() - ll_background.getHeight()) {
+                            ll_background.setAlpha(1);
+                            ll_background.setBackgroundColor(getResources().getColor(R.color.color_gray_3));
+                        } else {
+                            ll_background.setBackgroundColor(bg_rgb);
+                            float scale = (float) mDistance / changeHeight;
+                            ll_background.setAlpha(scale);
+                        }
+
+                        if (mDistance > changeHeight - ll_background.getHeight())
+                            tv_title.setText(title);
+                        else
+                            tv_title.setText(R.string.movie_detail_title);
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -180,13 +232,16 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
                         builder.generate(palette -> {
                             //获取到充满活力的这种色调
                             Palette.Swatch vibrant = palette.getVibrantSwatch();
+                            bg_rgb = vibrant != null ? vibrant.getRgb() : 0;
                             //根据调色板Palette获取到图片中的颜色设置到toolbar和tab中背景，标题等，使整个UI界面颜色统一
-                            fl_img.setBackgroundColor(vibrant != null ? vibrant.getRgb() : 0);
+                            fl_img.setBackgroundColor(bg_rgb);
+//                            ll_background.setBackgroundColor(vibrant != null ? vibrant.getRgb() : 0);
                             iv_movie.setImageBitmap(resource);
                         });
                     }
                 });
 
+        title = item.getTitle();
         tv_movie_src.setText(genres);
         tv_movie_title.setText(item.getTitle());
         summary_content.setText(item.getSummary());

@@ -17,7 +17,7 @@
             android:layout_height="238dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/margin_size_medium"
-            android:layout_marginTop="55dp" />
+            android:layout_marginTop="45dp" />
 
     </FrameLayout>
 

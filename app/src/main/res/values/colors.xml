@@ -36,5 +36,6 @@
     <color name="color_green">#679D11</color>
     <color name="color_gray">#9B9B9B</color>
     <color name="color_gray_2">#F5F5F5</color>
+    <color name="color_gray_3">#77e5e5e5</color>
     <color name="color_pink">#E47485</color>
 </resources>

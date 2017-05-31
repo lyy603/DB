@@ -11,9 +11,17 @@
         android:layout_height="match_parent" />
 
     <LinearLayout
+        android:id="@+id/ll_background"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/transparent"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_size_small" />
+
+    <LinearLayout
         android:id="@+id/ll_movie_detail_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="45dp"
         android:background="@color/transparent"
         android:padding="@dimen/padding_size_small">
 
@@ -25,12 +33,14 @@
             android:background="@drawable/ic_arrow_left" />
 
         <TextView
-            android:id="@+id/iv_title"
+            android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:ellipsize="end"
             android:gravity="center"
+            android:maxLines="1"
             android:textColor="@color/color_text_white"
             android:textSize="15dp" />
 
