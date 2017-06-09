@@ -25,9 +25,9 @@ public class MovieDetailFilmMakerListAdapter extends BaseQuickAdapter<PersonDeta
     protected void convert(BaseViewHolder viewHolder, PersonDetailBean bean) {
 
         if (viewHolder.getAdapterPosition() < mDirectorSize)
-            tag = "导演";
+            tag = mContext.getString(R.string.movie_detail_director);
         else
-            tag = "演员";
+            tag = mContext.getString(R.string.movie_detail_actor);
 
         viewHolder.setText(R.id.tv_name, bean.getName())
                 .setText(R.id.tv_position, tag);

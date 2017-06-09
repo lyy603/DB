@@ -19,6 +19,10 @@ public class MovieDetailListBean implements MultiItemEntity {
     //数据的类型
     private int type = NODATA;
 
+    private int shortCommentNum = 0;
+
+    private int reviewNum = 0;
+
     private MovieDetailShortCommentsBean.CommentsBean shortCommentsBean;
 
     private MovieDetailReviewsBean.ReviewsBean reviewsBean;
@@ -44,5 +48,21 @@ public class MovieDetailListBean implements MultiItemEntity {
     @Override
     public int getItemType() {
         return type;
+    }
+
+    public int getShortCommentNum() {
+        return shortCommentNum;
+    }
+
+    public void setShortCommentNum(int shortCommentNum) {
+        this.shortCommentNum = shortCommentNum;
+    }
+
+    public int getReviewNum() {
+        return reviewNum;
+    }
+
+    public void setReviewNum(int reviewNum) {
+        this.reviewNum = reviewNum;
     }
 }

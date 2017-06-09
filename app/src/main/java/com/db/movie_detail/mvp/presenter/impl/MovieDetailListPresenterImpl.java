@@ -32,6 +32,10 @@ public class MovieDetailListPresenterImpl implements IMovieDetailListPresenter {
 
     private final IMovieDetailListView view;
 
+    private int shortCommentNum = 0;
+
+    private int reviewNum = 0;
+
     public MovieDetailListPresenterImpl(IMovieDetailListView view) {
         this.view = view;
     }
@@ -45,15 +49,35 @@ public class MovieDetailListPresenterImpl implements IMovieDetailListPresenter {
                 JsonArray array = entry.getValue().getAsJsonArray();
                 for (JsonElement element : array) {
                     MovieDetailListBean detailBean = new MovieDetailListBean();
-                    if (entry.getKey().equals("comments"))
+                    if (entry.getKey().equals("comments")) {
                         detailBean.setShortCommentsBean((MovieDetailShortCommentsBean.CommentsBean) parseJson(element, MovieDetailShortCommentsBean.CommentsBean.class));
-                    else if (entry.getKey().equals("reviews"))
+                        detailBean.setShortCommentNum(shortCommentNum);
+                    } else if (entry.getKey().equals("reviews")) {
                         detailBean.setReviewsBean((MovieDetailReviewsBean.ReviewsBean) parseJson(element, MovieDetailReviewsBean.ReviewsBean.class));
+                        detailBean.setReviewNum(reviewNum);
+                    }
                     list.add(detailBean);
                 }
             }
         }
         return list;
+    }
+
+    private void getTotal(JsonObject jsonObjectComments, JsonObject jsonObjectReviews) {
+
+        for (Map.Entry<String, JsonElement> entry : jsonObjectComments.entrySet()) {
+            if (entry.getKey().equals("total")) {
+                shortCommentNum = entry.getValue().getAsInt();
+                break;
+            }
+        }
+
+        for (Map.Entry<String, JsonElement> entry : jsonObjectReviews.entrySet()) {
+            if (entry.getKey().equals("total")) {
+                reviewNum = entry.getValue().getAsInt();
+                break;
+            }
+        }
     }
 
     @Override
@@ -67,6 +91,7 @@ public class MovieDetailListPresenterImpl implements IMovieDetailListPresenter {
 
         Flowable.zip(shortCommentsFlowable, reviewsFlowable, (jsonObjectComments, jsonObjectReviews) -> {
             ArrayList<MovieDetailListBean> list = new ArrayList<>();
+            getTotal(jsonObjectComments, jsonObjectReviews);
             list.addAll(getList(jsonObjectComments));
             list.addAll(getList(jsonObjectReviews));
             return list;

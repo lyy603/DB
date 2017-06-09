@@ -50,5 +50,12 @@
     <string name="movie_detail_rating_count">%s人</string>
     <string name="movie_detail_film_maker">影人</string>
     <string name="movie_detail_title">电影</string>
+    <string name="movie_detail_director">导演</string>
+    <string name="movie_detail_actor">演员</string>
+    <string name="movie_detail_useful_count">%s 有用</string>
+    <string name="movie_detail_type_review">影评</string>
+    <string name="movie_detail_type_short_comment">短评</string>
+    <string name="movie_detail_review_num">全部影评%s个</string>
+    <string name="movie_detail_short_comment_num">全部短评%s个</string>
 
 </resources>
