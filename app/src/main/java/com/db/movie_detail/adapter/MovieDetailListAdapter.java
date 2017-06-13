@@ -43,9 +43,9 @@ public class MovieDetailListAdapter extends BaseMultiItemQuickAdapter<MovieDetai
                     helper.getView(R.id.tv_type).setVisibility(View.GONE);
 
                 //底部全部评价数量的显示控制
-                if (helper.getAdapterPosition() == getData().size()) {
+                if (helper.getAdapterPosition() == short_comments_first_index - 1) {
                     helper.getView(R.id.ll_footer).setVisibility(View.VISIBLE);
-                    helper.setText(R.id.tv_num, mContext.getString(R.string.movie_detail_short_comment_num, item.getReviewNum() + ""));
+                    helper.setText(R.id.tv_num, mContext.getString(R.string.movie_detail_short_comment_num, item.getShortCommentNum() + ""));
                 } else
                     helper.getView(R.id.ll_footer).setVisibility(View.GONE);
 
