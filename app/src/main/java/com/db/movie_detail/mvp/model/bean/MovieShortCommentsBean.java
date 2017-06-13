@@ -8,7 +8,7 @@ import java.util.List;
  * 作者：lyy on 2017/5/18 16:48
  */
 
-public class MovieDetailShortCommentsBean {
+public class MovieShortCommentsBean {
 
     /**
      * count : 20

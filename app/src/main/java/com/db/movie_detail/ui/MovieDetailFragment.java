@@ -37,7 +37,7 @@ import com.db.widget.recyclerview.animation.CustomAnimation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieDetailFragment extends BaseFragment implements IMovieDetailListView {
+public class MovieDetailFragment extends BaseFragment implements IMovieDetailListView, View.OnClickListener {
 
     private static final String KEY = "movie_detail";
 
@@ -132,7 +132,7 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
         presenter = new MovieDetailListPresenterImpl(this);
 
         //设置RecyclerView
-        listAdapter = new MovieDetailListAdapter(new ArrayList<>());
+        listAdapter = new MovieDetailListAdapter(new ArrayList<>(), this, this);
         listAdapter.openLoadAnimation(new CustomAnimation());
         listAdapter.addHeaderView(header);
 
@@ -259,5 +259,14 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
         list.addAll(item.getCasts());
         filmMakerListAdapter.setDirectorSize(item.getDirectors().size());
         filmMakerListAdapter.setNewData(list);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_footer_short_comment:
+                start(MovieCommentListFragment.newInstance(1, title, movieId));
+
+        }
     }
 }

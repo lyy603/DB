@@ -3,8 +3,8 @@ package com.db.movie_detail.mvp.presenter.impl;
 import com.db.API;
 import com.db.movie_detail.mvp.model.bean.MovieDetailBean;
 import com.db.movie_detail.mvp.model.bean.MovieDetailListBean;
-import com.db.movie_detail.mvp.model.bean.MovieDetailReviewsBean;
-import com.db.movie_detail.mvp.model.bean.MovieDetailShortCommentsBean;
+import com.db.movie_detail.mvp.model.bean.MovieReviewsBean;
+import com.db.movie_detail.mvp.model.bean.MovieShortCommentsBean;
 import com.db.movie_detail.mvp.presenter.IMovieDetailListPresenter;
 import com.db.movie_detail.mvp.view.IMovieDetailListView;
 import com.db.util.GsonHelper;
@@ -50,10 +50,10 @@ public class MovieDetailListPresenterImpl implements IMovieDetailListPresenter {
                 for (JsonElement element : array) {
                     MovieDetailListBean detailBean = new MovieDetailListBean();
                     if (entry.getKey().equals("comments")) {
-                        detailBean.setShortCommentsBean((MovieDetailShortCommentsBean.CommentsBean) parseJson(element, MovieDetailShortCommentsBean.CommentsBean.class));
+                        detailBean.setShortCommentsBean((MovieShortCommentsBean.CommentsBean) parseJson(element, MovieShortCommentsBean.CommentsBean.class));
                         detailBean.setShortCommentNum(shortCommentNum);
                     } else if (entry.getKey().equals("reviews")) {
-                        detailBean.setReviewsBean((MovieDetailReviewsBean.ReviewsBean) parseJson(element, MovieDetailReviewsBean.ReviewsBean.class));
+                        detailBean.setReviewsBean((MovieReviewsBean.ReviewsBean) parseJson(element, MovieReviewsBean.ReviewsBean.class));
                         detailBean.setReviewNum(reviewNum);
                     }
                     list.add(detailBean);
@@ -123,9 +123,9 @@ public class MovieDetailListPresenterImpl implements IMovieDetailListPresenter {
 //
 //                                for (JsonElement element : array) {
 //                                    if (entry.getKey().equals("comments"))
-//                                        detailBean.setShortCommentsBean((MovieDetailShortCommentsBean.CommentsBean) GsonHelper.parseJson(element, MovieDetailShortCommentsBean.CommentsBean.class));
+//                                        detailBean.setShortCommentsBean((MovieShortCommentsBean.CommentsBean) GsonHelper.parseJson(element, MovieShortCommentsBean.CommentsBean.class));
 //                                    else if (entry.getKey().equals("reviews"))
-//                                        detailBean.setReviewsBean((MovieDetailReviewsBean.ReviewsBean) GsonHelper.parseJson(element, MovieDetailReviewsBean.ReviewsBean.class));
+//                                        detailBean.setReviewsBean((MovieReviewsBean.ReviewsBean) GsonHelper.parseJson(element, MovieReviewsBean.ReviewsBean.class));
 //                                    list.add(detailBean);
 //                                }
 //

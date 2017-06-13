@@ -57,5 +57,7 @@
     <string name="movie_detail_type_short_comment">短评</string>
     <string name="movie_detail_review_num">全部影评%s个</string>
     <string name="movie_detail_short_comment_num">全部短评%s个</string>
+    <string name="movie_title_short_comment">%s短评</string>
+    <string name="movie_title_review">%s影评</string>
 
 </resources>

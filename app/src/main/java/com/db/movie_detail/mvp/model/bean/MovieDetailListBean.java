@@ -23,24 +23,24 @@ public class MovieDetailListBean implements MultiItemEntity {
 
     private int reviewNum = 0;
 
-    private MovieDetailShortCommentsBean.CommentsBean shortCommentsBean;
+    private MovieShortCommentsBean.CommentsBean shortCommentsBean;
 
-    private MovieDetailReviewsBean.ReviewsBean reviewsBean;
+    private MovieReviewsBean.ReviewsBean reviewsBean;
 
-    public MovieDetailShortCommentsBean.CommentsBean getShortCommentsBean() {
+    public MovieShortCommentsBean.CommentsBean getShortCommentsBean() {
         return shortCommentsBean;
     }
 
-    public void setShortCommentsBean(MovieDetailShortCommentsBean.CommentsBean shortCommentsBean) {
+    public void setShortCommentsBean(MovieShortCommentsBean.CommentsBean shortCommentsBean) {
         this.shortCommentsBean = shortCommentsBean;
         type = SHORTCOMMENTS;
     }
 
-    public MovieDetailReviewsBean.ReviewsBean getReviewsBean() {
+    public MovieReviewsBean.ReviewsBean getReviewsBean() {
         return reviewsBean;
     }
 
-    public void setReviewsBean(MovieDetailReviewsBean.ReviewsBean reviewsBean) {
+    public void setReviewsBean(MovieReviewsBean.ReviewsBean reviewsBean) {
         this.reviewsBean = reviewsBean;
         type = REVIEWS;
     }
