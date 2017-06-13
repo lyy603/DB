@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -14,14 +15,17 @@
         android:layout_marginTop="@dimen/margin_size_medium"
         android:text="@string/movie_detail_type_short_comment"
         android:textColor="@color/color_text_black"
-        android:textSize="16dp" />
+        android:textSize="16dp"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/iv_avatar"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_below="@+id/tv_type"
-        android:layout_marginStart="@dimen/margin_size_small"
+        android:layout_marginStart="@dimen/margin_size_medium"
+        android:layout_marginTop="@dimen/margin_size_small"
         android:contentDescription="@string/img_src_head" />
 
     <TextView
@@ -55,6 +59,7 @@
         android:layout_below="@id/tv_content"
         android:layout_marginEnd="@dimen/margin_size_small"
         android:layout_marginTop="@dimen/margin_size_supersmall"
+        android:layout_marginBottom="@dimen/margin_size_small"
         android:textColor="@color/color_text_grey" />
 
     <com.db.widget.rating_bar.MaterialRatingBar
@@ -104,7 +109,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_date"
         android:layout_marginTop="@dimen/margin_size_medium"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/tv_num"

@@ -1,6 +1,7 @@
 package com.db.movie_detail.mvp.presenter.impl;
 
 import com.db.API;
+import com.db.movie_detail.mvp.model.bean.MovieReviewsBean;
 import com.db.movie_detail.mvp.model.bean.MovieShortCommentsBean;
 import com.db.movie_detail.mvp.presenter.IMovieCommentListPresenter;
 import com.db.movie_detail.mvp.view.IMovieCommentListView;
@@ -57,6 +58,27 @@ public class MovieCommentListPresenterImpl implements IMovieCommentListPresenter
 
     @Override
     public void getMovieReviewList(String movieId, String apikey, String start, String count) {
+        RetrofitHelper.getRetrofitHelper().create(API.class)
+                .getReviewList(movieId, apikey, start, count)
+                .subscribeOn(Schedulers.io())
+                .flatMap(new Function<JsonObject, Publisher<MovieReviewsBean>>() {
+                    @Override
+                    public Publisher<MovieReviewsBean> apply(@NonNull JsonObject jsonObject) throws Exception {
+                        MovieReviewsBean bean = (MovieReviewsBean) GsonHelper.parseJson(jsonObject, MovieReviewsBean.class);
+                        return Flowable.just(bean);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new HttpSubscriber<MovieReviewsBean>() {
+                    @Override
+                    public void _onNext(MovieReviewsBean bean) {
+                        view.updateReview(bean);
+                    }
 
+                    @Override
+                    public void _onError(String message) {
+                        view.showError(message);
+                    }
+                });
     }
 }

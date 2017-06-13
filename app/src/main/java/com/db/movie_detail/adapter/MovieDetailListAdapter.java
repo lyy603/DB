@@ -104,6 +104,8 @@ public class MovieDetailListAdapter extends BaseMultiItemQuickAdapter<MovieDetai
                 ratingBar = helper.getView(R.id.mrb_avg_rating);
                 ratingBar.setRating(item.getReviewsBean().getRating().getValue());
 
+                helper.getView(R.id.ll_footer_review).setOnClickListener(listener);
+
                 break;
             default:
                 break;

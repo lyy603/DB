@@ -13,22 +13,27 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.db.API;
 import com.db.R;
+import com.db.movie_detail.adapter.MovieReviewAdapter;
 import com.db.movie_detail.adapter.MovieShortCommentAdapter;
 import com.db.movie_detail.mvp.model.bean.MovieReviewsBean;
 import com.db.movie_detail.mvp.model.bean.MovieShortCommentsBean;
 import com.db.movie_detail.mvp.presenter.impl.MovieCommentListPresenterImpl;
 import com.db.movie_detail.mvp.view.IMovieCommentListView;
 import com.db.widget.fragment.BaseFragment;
+import com.db.widget.recyclerview.CustomLoadMoreView;
 import com.db.widget.recyclerview.animation.CustomAnimation;
 
 import java.util.ArrayList;
 
-public class MovieCommentListFragment extends BaseFragment implements IMovieCommentListView {
+public class MovieCommentListFragment extends BaseFragment implements IMovieCommentListView,
+        BaseQuickAdapter.RequestLoadMoreListener {
 
-    private static final String KEY_TITLE = "movie_comment";
+    private static final String KEY_TITLE = "movie_title";
 
-    private static final String KEY_TYPE = "movie_comment";
+    private static final String KEY_TYPE = "movie_type";
 
     private static final String KEY_MOVIE_ID = "movie_id";
 
@@ -40,21 +45,15 @@ public class MovieCommentListFragment extends BaseFragment implements IMovieComm
 
     private LinearLayout ll_toolbar;
 
-    private RecyclerView recycler_view, film_maker_recycler_view;
+    private RecyclerView recycler_view;
 
     private MovieCommentListPresenterImpl presenter;
 
     private MovieShortCommentAdapter listAdapter;
 
+    private MovieReviewAdapter reviewAdapter;
+
     private Context context;
-
-    //标题改变的滑动高度
-    private int changeHeight;
-
-    //已经滑动的距离
-    private int mDistance = 0;
-
-    private int bg_rgb;
 
     //页面标题
     private String title = "";
@@ -64,6 +63,9 @@ public class MovieCommentListFragment extends BaseFragment implements IMovieComm
 
     //判断是短评还是影评
     private int type = 1;
+
+    //请求列表的第一个数据的位置
+    private int offset = 0;
 
     public static MovieCommentListFragment newInstance() {
         return newInstance(1, "", "");
@@ -105,11 +107,15 @@ public class MovieCommentListFragment extends BaseFragment implements IMovieComm
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         if (savedInstanceState == null && !TextUtils.isEmpty(movieId)) {
-            if (type == TYPE_SHORT_COMMENT)
-                presenter.getMovieShortCommentList(movieId, "0b2bdeda43b5688921839c8ecb20399b", "0", "5");
-            else if (type == TYPE_REVIEW)
-                presenter.getMovieReviewList(movieId, "0b2bdeda43b5688921839c8ecb20399b", "0", "5");
+            requestList();
         }
+    }
+
+    private void requestList() {
+        if (type == TYPE_SHORT_COMMENT)
+            presenter.getMovieShortCommentList(movieId, "0b2bdeda43b5688921839c8ecb20399b", offset + "", "20");
+        else if (type == TYPE_REVIEW)
+            presenter.getMovieReviewList(movieId, "0b2bdeda43b5688921839c8ecb20399b", offset + "", "20");
     }
 
     private void initView() {
@@ -118,53 +124,35 @@ public class MovieCommentListFragment extends BaseFragment implements IMovieComm
         presenter = new MovieCommentListPresenterImpl(this);
 
         //设置RecyclerView
-        listAdapter = new MovieShortCommentAdapter(new ArrayList<>());
-        listAdapter.openLoadAnimation(new CustomAnimation());
+        if (type == 1) {
+            listAdapter = new MovieShortCommentAdapter(new ArrayList<>());
+            listAdapter.openLoadAnimation(new CustomAnimation());
+            listAdapter.setAutoLoadMoreSize(API.LIMIT);//加载更多的触发条件
+            listAdapter.setOnLoadMoreListener(this, recycler_view);//加载更多回调监听
+            listAdapter.setLoadMoreView(new CustomLoadMoreView());
 
-        recycler_view.setLayoutManager(new LinearLayoutManager(context));
-        recycler_view.setAdapter(listAdapter);
+            recycler_view.setLayoutManager(new LinearLayoutManager(context));
+            recycler_view.setAdapter(listAdapter);
+        } else if (type == 2) {
+            reviewAdapter = new MovieReviewAdapter(new ArrayList<>());
+            reviewAdapter.openLoadAnimation(new CustomAnimation());
+            reviewAdapter.setAutoLoadMoreSize(API.LIMIT);//加载更多的触发条件
+            reviewAdapter.setOnLoadMoreListener(this, recycler_view);//加载更多回调监听
+            reviewAdapter.setLoadMoreView(new CustomLoadMoreView());
+
+            recycler_view.setLayoutManager(new LinearLayoutManager(context));
+            recycler_view.setAdapter(reviewAdapter);
+        }
 
         //其他设置
         if (!TextUtils.isEmpty(title)) {
             if (type == TYPE_SHORT_COMMENT)
-                tv_title.setText(getString(R.string.movie_title_short_comment));
+                tv_title.setText(getString(R.string.movie_title_short_comment, title));
             else if (type == TYPE_REVIEW)
-                tv_title.setText(getString(R.string.movie_title_review));
+                tv_title.setText(getString(R.string.movie_title_review, title));
         }
 
     }
-
-//    private void initListener() {
-//        ViewTreeObserver vto = iv_movie.getViewTreeObserver();
-//        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                changeHeight = tv_movie_src.getTop();
-//                iv_movie.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//                recycler_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//                    @Override
-//                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//
-//                        super.onScrolled(recyclerView, dx, dy);
-//                        mDistance += dy;
-//                        if (mDistance > 0 && mDistance < fl_img.getBottom() - ll_background.getHeight()) {
-//                            ll_background.setAlpha(1);
-//                            ll_background.setBackgroundColor(getResources().getColor(R.color.color_gray_3));
-//                        } else {
-//                            ll_background.setBackgroundColor(bg_rgb);
-//                            float scale = (float) mDistance / changeHeight;
-//                            ll_background.setAlpha(scale);
-//                        }
-//
-//                        if (mDistance > changeHeight - ll_background.getHeight())
-//                            tv_title.setText(title);
-//                        else
-//                            tv_title.setText(R.string.movie_detail_title);
-//                    }
-//                });
-//            }
-//        });
-//    }
 
     @Override
     public void showError(String message) {
@@ -173,11 +161,28 @@ public class MovieCommentListFragment extends BaseFragment implements IMovieComm
 
     @Override
     public void updateShortComment(MovieShortCommentsBean bean) {
+        this.offset = this.offset + bean.getComments().size();
         listAdapter.addData(bean.getComments());
+//        refresh_layout.setRefreshing(false);
+        if (bean.getComments().size() < API.LIMIT)
+            listAdapter.loadMoreEnd(true);
+        else
+            listAdapter.loadMoreComplete();
     }
 
     @Override
     public void updateReview(MovieReviewsBean bean) {
+        this.offset = this.offset + bean.getReviews().size();
+        reviewAdapter.addData(bean.getReviews());
+//        refresh_layout.setRefreshing(false);
+        if (bean.getReviews().size() < API.LIMIT)
+            reviewAdapter.loadMoreEnd(true);
+        else
+            reviewAdapter.loadMoreComplete();
+    }
 
+    @Override
+    public void onLoadMoreRequested() {
+        requestList();
     }
 }

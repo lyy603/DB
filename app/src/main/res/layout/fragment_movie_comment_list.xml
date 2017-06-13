@@ -16,9 +16,9 @@
             android:id="@+id/iv_back"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginEnd="@dimen/margin_size_medium"
             android:layout_gravity="center"
-            android:background="@drawable/ic_arrow_left" />
+            android:layout_marginEnd="@dimen/margin_size_medium"
+            android:background="@drawable/ic_arrow_left_green" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -27,9 +27,9 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:maxLines="1"
-            android:textColor="@color/color_text_white"
+            android:textColor="@color/color_text_black"
             android:textSize="15dp" />
 
     </LinearLayout>

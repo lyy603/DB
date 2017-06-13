@@ -266,6 +266,10 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
         switch (v.getId()) {
             case R.id.ll_footer_short_comment:
                 start(MovieCommentListFragment.newInstance(1, title, movieId));
+                break;
+            case R.id.ll_footer_review:
+                start(MovieCommentListFragment.newInstance(2, title, movieId));
+                break;
 
         }
     }
