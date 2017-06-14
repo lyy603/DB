@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/padding_size_small">
+
+    <TextView
+        android:id="@+id/tv_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_size_medium"
+        android:layout_marginTop="@dimen/margin_size_medium"
+        android:text="@string/movie_detail_type_review"
+        android:textColor="@color/color_text_black"
+        android:textSize="16dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_type"
+        android:layout_marginEnd="@dimen/margin_size_medium"
+        android:layout_marginStart="@dimen/margin_size_medium"
+        android:layout_marginTop="@dimen/margin_size_medium"
+        android:textColor="@color/color_text_black"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/tv_title"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="@dimen/margin_size_supersmall"
+        android:textSize="14dp" />
+
+    <com.db.widget.rating_bar.MaterialRatingBar
+        android:id="@+id/mrb_avg_rating"
+        style="@style/Widget.MaterialRatingBar.RatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_name"
+        android:layout_alignTop="@id/tv_name"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/margin_size_small"
+        android:layout_toEndOf="@+id/tv_name"
+        android:numStars="5"
+        app:mrb_progressTint="@color/color_orange"
+        app:mrb_secondaryProgressTint="@color/color_orange" />
+
+    <TextView
+        android:id="@+id/tv_content_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/tv_title"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginEnd="@dimen/margin_size_medium"
+        android:layout_marginTop="@dimen/margin_size_supersmall"
+        android:textColor="@color/color_text_grey"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/tv_useful_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/tv_title"
+        android:layout_below="@id/tv_content_review"
+        android:layout_marginTop="@dimen/margin_size_supersmall"
+        android:textColor="@color/color_text_grey"
+        android:textSize="14dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_footer_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_useful_num"
+        android:layout_marginTop="@dimen/margin_size_medium"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/color_text_green"
+            android:textSize="18dp" />
+
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1px"-->
+            <!--android:layout_marginTop="@dimen/margin_size_supersmall"-->
+            <!--android:background="@color/color_gray" />-->
+
+    </LinearLayout>
+
+</RelativeLayout>

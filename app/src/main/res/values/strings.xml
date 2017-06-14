@@ -1,3 +1,63 @@
 <resources>
-    <string name="app_name">DBLYY</string>
+    <string name="app_name">豆瓣电影</string>
+
+    <!--通用-->
+    <string name="progress_loading">正在努力工作，请稍等…</string>
+    <string name="explore">发现</string>
+    <string name="user">我的</string>
+    <string name="enter">确定</string>
+    <string name="cancel">取消</string>
+    <string name="send">发送</string>
+    <string name="second_exit">"再按一次Back键退出程序"</string>
+    <string name="error_grant">部分所需权限请求被拒绝，程序可能会出现崩溃！</string>
+    <string name="demo_empty">是空的哦</string>
+
+    <!--自定义view-->
+    <string name="expandable_text_view_to_expand_hint">展开</string>
+    <string name="expandable_text_view_to_shrink_hint">收起</string>
+
+    <!--图片解释-->
+    <string name="img_src_head">头像</string>
+
+    <!--预览图片-->
+    <string name="gallery">预览图片</string>
+    <string name="loadmore_end">所有数据加载完成</string>
+    <string name="loadmore_fail">加载失败，点击重试</string>
+
+    <!--tab-->
+    <string name="tab_hot_show">热映</string>
+    <string name="tab_find">找片</string>
+    <string name="tab_personal">我的</string>
+
+    <!--热映-->
+    <string name="hot_showing_address_unset">未设置</string>
+    <string name="hot_showing_search_hint">电影/电视剧/影人</string>
+    <string name="hot_showing_buy_ticket">购票</string>
+    <string name="hot_showing_director">导演：</string>
+    <string name="hot_showing_leading_role">主演：</string>
+    <string name="hot_showing_collect_count">%s人看过</string>
+
+    <!--影片详情-->
+    <string name="movie_detail_want_see">想看</string>
+    <string name="movie_detail_had_see">看过</string>
+    <string name="movie_detail_buy_ticket">选座购票</string>
+    <string name="movie_detail_buy_ticket_price">￥%s起</string>
+    <string name="movie_detail_summary">简介</string>
+    <string name="movie_detail_original_name">原名：%s</string>
+    <string name="movie_detail_pubdate">上映时间：%s</string>
+    <string name="movie_detail_durations">片长：%s</string>
+    <string name="movie_detail_score">豆瓣评分</string>
+    <string name="movie_detail_rating_count">%s人</string>
+    <string name="movie_detail_film_maker">影人</string>
+    <string name="movie_detail_title">电影</string>
+    <string name="movie_detail_director">导演</string>
+    <string name="movie_detail_actor">演员</string>
+    <string name="movie_detail_useful_count">%s 有用</string>
+    <string name="movie_detail_type_review">影评</string>
+    <string name="movie_detail_type_short_comment">短评</string>
+    <string name="movie_detail_review_num">全部影评%s个</string>
+    <string name="movie_detail_short_comment_num">全部短评%s个</string>
+    <string name="movie_title_short_comment">%s短评</string>
+    <string name="movie_title_review">%s影评</string>
+
 </resources>

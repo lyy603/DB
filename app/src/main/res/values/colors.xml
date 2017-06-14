@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="color_primary">@color/primary</color>
+    <color name="color_primary_dark">@color/primary_dark</color>
+    <color name="color_primary_light">@color/primary_light</color>
+    <color name="color_secondary_text">@color/secondary_text</color>
+    <color name="color_accent">@color/accent</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="color_icons">@color/icons</color>
+    <color name="color_divider">@color/divider</color>
+
+    <!--导航栏-->
+    <color name="color_tab_pressed">@color/color_primary</color>
+    <color name="color_tab_normal">@color/color_secondary_text</color>
+
+    <!--字体文本颜色-->
+    <color name="color_text_normal">#3c4457</color>
+    <color name="color_text_black">#030303</color>
+    <color name="color_text_grey">#c2c2c2</color>
+    <color name="color_text_white">#ffffff</color>
+    <color name="color_text_hint">#8f8e94</color>
+    <color name="color_text_subheading">#9B9B9B</color>
+    <color name="color_text_orange">#FFAD30</color>
+    <color name="color_text_green">#679D11</color>
+    <color name="color_text_pink">#E47485</color>
+
+    <!--各种颜色-->
+    <color name="transparent">#00000000</color>
+    <color name="color_white">#ffffff</color>
+    <color name="color_black_1">#000000</color>
+    <color name="color_black_2">#1E2535</color>
+    <color name="color_black_3">#0D121A</color>
+    <color name="color_orange">#FFAD30</color>
+    <color name="color_green">#679D11</color>
+    <color name="color_gray">#9B9B9B</color>
+    <color name="color_gray_2">#F5F5F5</color>
+    <color name="color_gray_3">#77e5e5e5</color>
+    <color name="color_pink">#E47485</color>
 </resources>

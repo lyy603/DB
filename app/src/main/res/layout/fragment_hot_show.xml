@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_text_white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_size_small">
+
+        <TextView
+            android:id="@+id/tv_address_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:drawableEnd="@drawable/ic_arrow_down"
+            android:gravity="center"
+            android:text="@string/hot_showing_address_unset"
+            android:textColor="@color/color_text_black"
+            android:textSize="15dp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin_size_supersmall"
+            android:layout_toEndOf="@id/tv_address_setting"
+            android:background="@drawable/common_gray_inside_border">
+
+            <TextView
+                android:id="@+id/tv_movie_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:drawablePadding="@dimen/padding_size_limitsmall"
+                android:drawableStart="@drawable/ic_search"
+                android:gravity="center"
+                android:text="@string/hot_showing_search_hint"
+                android:textColor="@color/color_text_subheading"
+                android:textSize="15dp" />
+
+        </FrameLayout>
+
+        <!--<ImageView-->
+        <!--android:layout_width="30dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:background="@drawable/ic_search"-->
+        <!--android:contentDescription="搜索图片" />-->
+
+    </RelativeLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager_photo"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:layout_behavior="com.db.hot_show.ui.behavior.PhotoBehavior" />
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magic_indicator_hot_show"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_behavior="com.db.hot_show.ui.behavior.MagicIndicatorBehavior" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.db.hot_show.ui.behavior.ShowingListBehavior" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>

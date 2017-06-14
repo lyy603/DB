@@ -2,4 +2,58 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="statusbar_height">0dp</dimen>
+    <dimen name="toobar_height">50dp</dimen>
+    <dimen name="tab_height">42dp</dimen>
+    <dimen name="divider_height">0.5dp</dimen>
+    <dimen name="imageview_default_size">25dp</dimen>
+    <dimen name="cardview_margin">5dp</dimen>
+    <dimen name="cardview_radius">2dp</dimen>
+    <dimen name="cardview_elevation">4dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="widget_elevation">10dp</dimen>
+    <dimen name="textsize_primary">14sp</dimen>
+    <dimen name="textsize_secondary">12sp</dimen>
+
+    <dimen name="fab_size">54dp</dimen>
+    <dimen name="sp_48">48sp</dimen>
+    <dimen name="sp_24">24sp</dimen>
+    <dimen name="sp_20">20sp</dimen>
+    <dimen name="sp_18">18sp</dimen>
+    <dimen name="sp_17">17sp</dimen>
+    <dimen name="sp_16">16sp</dimen>
+    <dimen name="sp_15">15sp</dimen>
+    <dimen name="sp_14">14sp</dimen>
+    <dimen name="sp_13">13sp</dimen>
+    <dimen name="sp_12">12sp</dimen>
+    <dimen name="sp_9">9sp</dimen>
+
+    <!-- 内边距 -->
+    <dimen name="padding_size_large">30dp</dimen>
+    <dimen name="padding_size_medium">20dp</dimen>
+    <dimen name="padding_size_min">16dp</dimen>
+    <dimen name="padding_size_small">10dp</dimen>
+    <dimen name="padding_size_supersmall">5dp</dimen>
+    <dimen name="padding_size_limitsmall">3dp</dimen>
+
+    <!-- 外边距 -->
+    <dimen name="margin_size_large">30dp</dimen>
+    <dimen name="margin_size_medium">20dp</dimen>
+    <dimen name="margin_size_min">16dp</dimen>
+    <dimen name="margin_size_small">10dp</dimen>
+    <dimen name="margin_size_supersmall">5dp</dimen>
+    <dimen name="margin_size_limitsmall">3dp</dimen>
+
+    <!-- 半径 -->
+    <dimen name="radius_size_super_large">25dp</dimen>
+    <dimen name="radius_size_large">15dp</dimen>
+    <dimen name="radius_size_medium">10dp</dimen>
+    <dimen name="radius_size_min">6dp</dimen>
+    <dimen name="radius_size_small">3dp</dimen>
+    <dimen name="radius_size_limit_small">1dp</dimen>
+
+
+    <dimen name="airbnb_translation_min">100dp</dimen>
+
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="hot_show_tname">
+        <item>正在热映</item>
+        <item>即将上映</item>
+    </string-array>
+
+</resources>
