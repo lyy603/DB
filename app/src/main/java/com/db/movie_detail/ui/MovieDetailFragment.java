@@ -21,6 +21,8 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.db.R;
 import com.db.movie_detail.adapter.MovieDetailFilmMakerListAdapter;
 import com.db.movie_detail.adapter.MovieDetailListAdapter;
@@ -138,6 +140,31 @@ public class MovieDetailFragment extends BaseFragment implements IMovieDetailLis
 
         recycler_view.setLayoutManager(new LinearLayoutManager(context));
         recycler_view.setAdapter(listAdapter);
+
+
+        recycler_view.addOnItemTouchListener(new SimpleClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                MovieDetailListBean bean = (MovieDetailListBean) adapter.getData().get(position);
+                if (bean.getReviewsBean() != null)
+                    start(MovieReviewDetailFragment.newInstance(bean.getReviewsBean().getAlt()));
+            }
+
+            @Override
+            public void onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+
+            @Override
+            public void onItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+        });
 
         //其他设置
         tv_title.setText(R.string.movie_detail_title);

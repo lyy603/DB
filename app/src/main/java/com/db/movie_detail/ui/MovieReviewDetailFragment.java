@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -78,18 +79,22 @@ public class MovieReviewDetailFragment extends BaseFragment {
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        if (!TextUtils.isEmpty(url))
-            web_view.loadUrl("http://movie.douban.com&review/8590553/");
     }
 
     private void initView() {
 
-        //初始化MVP
-//        presenter = new MovieCommentListPresenterImpl(this);
-
-        //设置RecyclerView
+        if (!TextUtils.isEmpty(url))
+            web_view.loadUrl(url);
 
         //其他设置
+         web_view.setWebViewClient(new WebViewClient(){
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            //返回值是true的时候是控制网页在WebView中去打开，如果为false调用系统浏览器或第三方浏览器打开
+            view.loadUrl(url);
+            return true;
+        }
+    });
 
-    }
+}
 }
