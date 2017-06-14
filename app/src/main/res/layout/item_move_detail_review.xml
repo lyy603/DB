@@ -90,11 +90,11 @@
             android:textColor="@color/color_text_green"
             android:textSize="18dp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginTop="@dimen/margin_size_supersmall"
-            android:background="@color/color_gray" />
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1px"-->
+            <!--android:layout_marginTop="@dimen/margin_size_supersmall"-->
+            <!--android:background="@color/color_gray" />-->
 
     </LinearLayout>
 

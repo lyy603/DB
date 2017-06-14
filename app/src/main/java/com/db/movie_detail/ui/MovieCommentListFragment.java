@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.db.API;
 import com.db.R;
 import com.db.movie_detail.adapter.MovieReviewAdapter;
@@ -54,6 +55,9 @@ public class MovieCommentListFragment extends BaseFragment implements IMovieComm
     private MovieReviewAdapter reviewAdapter;
 
     private Context context;
+
+    //请求网页链接
+    private String url = "";
 
     //页面标题
     private String title = "";
@@ -142,6 +146,29 @@ public class MovieCommentListFragment extends BaseFragment implements IMovieComm
 
             recycler_view.setLayoutManager(new LinearLayoutManager(context));
             recycler_view.setAdapter(reviewAdapter);
+
+            recycler_view.addOnItemTouchListener(new SimpleClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    MovieReviewsBean.ReviewsBean bean = (MovieReviewsBean.ReviewsBean) adapter.getData().get(position);
+                    start(MovieReviewDetailFragment.newInstance(bean.getAlt()));
+                }
+
+                @Override
+                public void onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+
+                }
+
+                @Override
+                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+                }
+
+                @Override
+                public void onItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
+
+                }
+            });
         }
 
         //其他设置
