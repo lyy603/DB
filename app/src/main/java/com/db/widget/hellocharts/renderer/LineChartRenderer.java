@@ -362,12 +362,12 @@ public class LineChartRenderer extends AbstractChartRenderer {
         }
 
 //        canvas.drawCircle(100, 200, 10, pointPaint);
-        drawLabelPath(canvas, path, line.getValues());
+        drawLabelPath(canvas, path, line.getValues(), line.getPointColor());
 
         path.reset();
     }
 
-    private void drawLabelPath(Canvas canvas, Path path, List<PointValue> list) {
+    private void drawLabelPath(Canvas canvas, Path path, List<PointValue> list, int color) {
 
         float[] pos = new float[2];                // 当前点的实际位置
         float[] tan = new float[2];
@@ -390,11 +390,12 @@ public class LineChartRenderer extends AbstractChartRenderer {
 
         float viewHalfWidth = 20;
 
+        pointPaint.setColor(color);
         PathMeasure pathMeasure = new PathMeasure(path, false);
 
         //lastRawX 观察点的起始坐标（这里取第一个点为观察点）
         if (lastRawX == -1) {
-            canvas.drawCircle(100, 200, 10, pointPaint);
+//            canvas.drawCircle(100, 200, 10, pointPaint);
             lastRawX = computator.computeRawX(list.get(0).getX());
         }
         rawXStart = computator.computeRawX(list.get(0).getX());
