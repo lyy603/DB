@@ -98,10 +98,6 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
 
         //设置RecyclerView
 
-        getAxisXLables();//获取x轴的标注
-        getAxisPoints();//获取坐标点
-        initLineChart();//初始化
-
     }
 
     /**
@@ -170,7 +166,14 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     public void updateFutureWeather(FutureWeatherListBean bean) {
+        date = new String[24];
+        for (int i = 0; i < bean.getHourly().size(); i++) {
+            date[i] = bean.getHourly().get(i).getTime().substring(11, 16);
+        }
 
+        getAxisXLables();//获取x轴的标注
+        getAxisPoints();//获取坐标点
+        initLineChart();//初始化
     }
 
     @Override
