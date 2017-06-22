@@ -529,7 +529,7 @@ public class AxesRenderer {
     }
 
     private void drawAxisLines(Canvas canvas, Axis axis, int position) {
-        final Rect contentRectMargins = computator.getContentRectMinusAxesMargins();
+        final Rect contentRectMargins = computator.getContentRectMinusAllMargins();
         float separationX1, separationY1, separationX2, separationY2;
         separationX1 = separationY1 = separationX2 = separationY2 = 0;
         float lineX1, lineY1, lineX2, lineY2;
@@ -550,7 +550,7 @@ public class AxesRenderer {
         }
         // Draw separation line with the same color as axis labels and name.
         if (axis.hasSeparationLine()) {
-//            canvas.drawLine(separationX1, separationY1, separationX2, separationY2, labelPaintTab[position]);
+            canvas.drawLine(separationX1, separationY1, separationX2, separationY2, labelPaintTab[position]);
         }
 
         if (axis.hasLines()) {

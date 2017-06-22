@@ -13,7 +13,9 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.db.R;
 import com.db.util.ProgressUtil;
-import com.db.weather.mvp.view.IDemoListView;
+import com.db.weather.mvp.model.bean.FutureWeatherListBean;
+import com.db.weather.mvp.presenter.impl.WeatherListPresenterImpl;
+import com.db.weather.mvp.view.IWeatherListView;
 import com.db.widget.fragment.BaseFragment;
 import com.db.widget.hellocharts.gesture.ContainerScrollType;
 import com.db.widget.hellocharts.gesture.ZoomType;
@@ -32,9 +34,12 @@ import java.util.List;
 import butterknife.OnClick;
 
 
-public class WeatherListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, IDemoListView, BaseQuickAdapter.RequestLoadMoreListener {
+public class WeatherListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,
+        IWeatherListView, BaseQuickAdapter.RequestLoadMoreListener {
 
     private static final String KEY = "key";
+
+    private WeatherListPresenterImpl weatherListPresenter;
 
     LineChartView chart;
 
@@ -78,9 +83,15 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
         return attachToSwipeBack(view);
     }
 
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        weatherListPresenter.getFutureWeather("36bdd59658111bc23ff2bf9aaf6e345c", "zh-chs", "CHGD000000");
+    }
+
     private void initView() {
         //初始化MVP
-
+        weatherListPresenter = new WeatherListPresenterImpl(this);
         //设置TitleBar
 
         //设置RefreshLayout
@@ -130,7 +141,6 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
         //现在只需要将它保存到LineChartData中
         LineChartData data = new LineChartData(lines);    //设置时间坐标轴
         Axis axisX = new Axis(); //X轴
-        axisX.setTextColor(Color.BLACK);  //设置字体颜色
         axisX.setTextSize(8);//设置字体大小
         axisX.setValues(mAxisValues);  //填充X轴的坐标名称
         axisX.setHasLines(true);
@@ -148,7 +158,7 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
         chart.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
         chart.setVisibility(View.VISIBLE);    //设置一下整体的Y轴显示的开始和结束坐标
         final Viewport v1 = new Viewport(chart.getMaximumViewport());
-        v1.bottom = 110;
+        v1.bottom = 120;
         v1.top = 130;    // You have to set max and current viewports separately.
         chart.setMaximumViewport(v1);
         //设置当前的窗口显示多少个坐标数据，必须将折线的可以缩放的开关打开
@@ -159,16 +169,9 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
     }
 
     @Override
-    public void onRefresh() {
+    public void updateFutureWeather(FutureWeatherListBean bean) {
 
     }
-
-    @Override
-    public void showError(String message) {
-        ProgressUtil.dismiss();
-        ToastUtils.showShort(message);
-    }
-
 
     @Override
     public void onLoadMoreRequested() {
@@ -187,8 +190,18 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
     }
 
     @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void showError(String message) {
+        ProgressUtil.dismiss();
+        ToastUtils.showShort(message);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
     }
-
 }
