@@ -375,7 +375,7 @@ public class AxesRenderer {
     public void drawInForeground(Canvas canvas) {
         Axis axis = chart.getChartData().getAxisYLeft();
         if (null != axis) {
-            drawAxisLabelsAndName(canvas, axis, LEFT);
+//            drawAxisLabelsAndName(canvas, axis, LEFT);
         }
 
         axis = chart.getChartData().getAxisYRight();
