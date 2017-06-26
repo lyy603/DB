@@ -13,6 +13,7 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.Rect;
 import android.graphics.Shader;
 
+import com.db.weather.ui.WeatherSlideView;
 import com.db.widget.hellocharts.model.Line;
 import com.db.widget.hellocharts.model.LineChartData;
 import com.db.widget.hellocharts.model.PointValue;
@@ -51,6 +52,8 @@ public class LineChartRenderer extends AbstractChartRenderer {
     private Canvas softwareCanvas = new Canvas();
     private Viewport tempMaximumViewport = new Viewport();
 
+    private WeatherSlideView slideView;
+
     private float lastRawX = -1;
 
     public LineChartRenderer(Context context, Chart chart, LineChartDataProvider dataProvider) {
@@ -69,6 +72,7 @@ public class LineChartRenderer extends AbstractChartRenderer {
 
         checkPrecision = ChartUtils.dp2px(density, 2);
 
+        slideView = new WeatherSlideView(context);
     }
 
     public void onChartSizeChanged() {
@@ -132,6 +136,7 @@ public class LineChartRenderer extends AbstractChartRenderer {
         if (null != softwareBitmap) {
             canvas.drawBitmap(softwareBitmap, 0, 0, null);
         }
+
     }
 
     @Override
@@ -361,7 +366,6 @@ public class LineChartRenderer extends AbstractChartRenderer {
             drawArea(canvas, line);
         }
 
-//        canvas.drawCircle(100, 200, 10, pointPaint);
         drawLabelPath(canvas, path, line.getValues(), line.getPointColor());
 
         path.reset();
@@ -371,9 +375,9 @@ public class LineChartRenderer extends AbstractChartRenderer {
 
         float[] pos = new float[2];                // 当前点的实际位置
         float[] tan = new float[2];
-        //观察点的当前坐标
+        //观察点的当前横坐标
         float rawXStart = Float.NaN;
-        //最后一个点的当前坐标
+        //最后一个点的当前横坐标
         float rawXEnd = Float.NaN;
         //整个曲线布局的真实宽度
         float viewMaxSize = Float.NaN;
@@ -388,7 +392,11 @@ public class LineChartRenderer extends AbstractChartRenderer {
         //滑动点当前在屏幕内的横坐标
         float currentPointX = Float.NaN;
 
-        float viewHalfWidth = 20;
+        float slideViewWidth = 180;
+        //中点在屏幕上的纵坐标
+        float slideViewMidY = Float.NaN;
+        //中点纵坐标对应的坐标值
+        float currentY = Float.NaN;
 
         pointPaint.setColor(color);
         PathMeasure pathMeasure = new PathMeasure(path, false);
@@ -406,11 +414,22 @@ public class LineChartRenderer extends AbstractChartRenderer {
         contentMaxSize = computator.getContentRectMinusAllMargins().width();
 
         percent = (lastRawX - rawXStart) / (viewMaxSize - contentMaxSize);
-        currentPointX = marginLeft + viewHalfWidth + (contentMaxSize - viewHalfWidth * 2) * percent;
-        distance = viewHalfWidth + ((pathMeasure.getLength() - contentMaxSize) + (contentMaxSize - viewHalfWidth * 2)) * percent;
+        currentPointX = marginLeft + (contentMaxSize - slideViewWidth) * percent;
 
-        pathMeasure.getPosTan(distance, pos, tan);
-        canvas.drawCircle(currentPointX, pos[1] - 20, 10, pointPaint);
+        //手指滑动的距离+slideView滑动的距离=在曲线走过的距离
+        distance = ((pathMeasure.getLength() - contentMaxSize) + (contentMaxSize - slideViewWidth)) * percent;
+        pathMeasure.getPosTan(distance + slideViewWidth / 2, pos, tan);
+        slideViewMidY = pos[1];
+
+        //按比例算出尖角对应的表格的纵坐标
+        currentY = computator.getCurrentViewport().bottom +
+                (computator.getContentRectMinusAllMargins().bottom - slideViewMidY)
+                        / computator.getContentRectMinusAllMargins().height()
+                        * (computator.getCurrentViewport().height());
+
+        slideView.setParameter(currentPointX, slideViewMidY, 70, slideViewWidth, 30, 15, 4, linePaint.getColor(), color);
+        slideView.draw(canvas, (int) currentY + "");
+        computator.getCurrentViewport();
     }
 
     private void prepareLinePaint(final Line line) {

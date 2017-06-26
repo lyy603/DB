@@ -54,7 +54,7 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
             "22.06.2016", "23.06.2016", "24.06.2016", "25.06.2016", "26.06.2016",
             "27.06.2016", "28.06.2016", "29.06.2016", "30.06.2016", "31.06.2016"};//X轴的底部时间标注集合
 
-    float[] weight = {125.8f, 124.8f, 126.1f, 127.2f, 126.5f, 126.9f, 125.9f, 126.0f,
+    float[] weather = {125.8f, 124.8f, 126.1f, 127.2f, 126.5f, 126.9f, 125.9f, 126.0f,
             125.8f, 124.8f, 126.1f, 127.2f, 126.5f, 126.9f, 125.9f, 126.0f,
             125.8f, 124.8f, 126.1f, 127.2f, 126.5f, 126.9f, 125.9f, 126.0f};//图表体重数据集合
 
@@ -114,7 +114,7 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
      */
     private void getAxisPoints() {
         for (int i = 0; i < date.length; i++) {
-            mWeightValues.add(new PointValue(i, weight[i]));//体重坐标数据
+            mWeightValues.add(new PointValue(i, weather[i]));//体重坐标数据
         }
     }
 
@@ -154,8 +154,8 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
         chart.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
         chart.setVisibility(View.VISIBLE);    //设置一下整体的Y轴显示的开始和结束坐标
         final Viewport v1 = new Viewport(chart.getMaximumViewport());
-        v1.bottom = 120;
-        v1.top = 130;    // You have to set max and current viewports separately.
+        v1.bottom = 20;
+        v1.top = 45;    // You have to set max and current viewports separately.
         chart.setMaximumViewport(v1);
         //设置当前的窗口显示多少个坐标数据，必须将折线的可以缩放的开关打开
         Viewport v = new Viewport(chart.getMaximumViewport());
@@ -169,6 +169,11 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
         date = new String[24];
         for (int i = 0; i < bean.getHourly().size(); i++) {
             date[i] = bean.getHourly().get(i).getTime().substring(11, 16);
+        }
+
+        weather = new float[bean.getHourly().size()];
+        for (int i = 0; i < bean.getHourly().size(); i++) {
+            weather[i] = Float.parseFloat(bean.getHourly().get(i).getTemperature());
         }
 
         getAxisXLables();//获取x轴的标注
