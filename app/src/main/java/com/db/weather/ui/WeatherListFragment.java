@@ -112,9 +112,9 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
     /**
      * 图表的每个点的显示
      */
-    private void getAxisPoints() {
+    private void getAxisPoints(FutureWeatherListBean bean) {
         for (int i = 0; i < date.length; i++) {
-            mWeightValues.add(new PointValue(i, weather[i]));//体重坐标数据
+            mWeightValues.add(new PointValue(i, weather[i], bean.getHourly().get(i).getText()));//体重坐标数据
         }
     }
 
@@ -177,7 +177,7 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
         }
 
         getAxisXLables();//获取x轴的标注
-        getAxisPoints();//获取坐标点
+        getAxisPoints(bean);//获取坐标点
         initLineChart();//初始化
     }
 

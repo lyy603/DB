@@ -397,6 +397,8 @@ public class LineChartRenderer extends AbstractChartRenderer {
         float slideViewMidY = Float.NaN;
         //中点纵坐标对应的坐标值
         float currentY = Float.NaN;
+        //中点横坐标对应的坐标值
+        int currentX = 0;
 
         pointPaint.setColor(color);
         PathMeasure pathMeasure = new PathMeasure(path, false);
@@ -427,8 +429,12 @@ public class LineChartRenderer extends AbstractChartRenderer {
                         / computator.getContentRectMinusAllMargins().height()
                         * (computator.getCurrentViewport().height());
 
-        slideView.setParameter(currentPointX, slideViewMidY, 70, slideViewWidth, 30, 15, 4, linePaint.getColor(), color);
-        slideView.draw(canvas, (int) currentY + "");
+        //手指滑动的距离+slideView滑动的距离之和除以单位间隔
+        currentX = (int) (((pathMeasure.getLength() - contentMaxSize) + (contentMaxSize - slideViewWidth)) * percent
+                / (computator.getContentRectMinusAllMargins().width() / computator.getCurrentViewport().width()));
+
+        slideView.setParameter(currentPointX, slideViewMidY, 80, slideViewWidth, 30, 15, 4, linePaint.getColor(), color);
+        slideView.draw(canvas, (int) currentY + "", list.get(currentX).getSrc());
         computator.getCurrentViewport();
     }
 

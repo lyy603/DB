@@ -94,16 +94,17 @@ public class WeatherSlideView extends View {
     }
 
 
-    public void draw(Canvas canvas, String text) {
+    public void draw(Canvas canvas, String temperature, String src) {
 
         drawBackground(canvas);
 
-        drawContent(canvas, text);
+        drawContent(canvas, temperature, src);
     }
 
-    private void drawContent(Canvas canvas, String text) {
-        textPaint.setTextSize(20);
+    private void drawContent(Canvas canvas, String text, String src) {
+        textPaint.setTextSize(25);
         canvas.drawText(text, startX + contentMargin, startY + mHeight / 2 + textPaint.getTextSize() / 2, textPaint);
+        canvas.drawText(src, startX + mWidth - 90, startY + mHeight / 2 + textPaint.getTextSize() / 2, textPaint);
     }
 
     private void drawBackground(Canvas canvas) {

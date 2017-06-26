@@ -15,12 +15,15 @@ public class PointValue {
     private float diffY;
     private char[] label;
 
+    private String src;
+
     public PointValue() {
         set(0, 0);
     }
 
-    public PointValue(float x, float y) {
+    public PointValue(float x, float y, String src) {
         set(x, y);
+        this.src = src;
     }
 
     public PointValue(PointValue pointValue) {
@@ -118,5 +121,9 @@ public class PointValue {
         result = 31 * result + (diffY != +0.0f ? Float.floatToIntBits(diffY) : 0);
         result = 31 * result + (label != null ? Arrays.hashCode(label) : 0);
         return result;
+    }
+
+    public String getSrc() {
+        return src;
     }
 }
