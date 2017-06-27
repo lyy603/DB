@@ -55,7 +55,7 @@ public interface API {
             @Query("key") String key
     );
 
-    @GET("future24h/")
+    @GET("all/")
     Flowable<JsonObject> getFutureWeather(
             @Query("city") String city
     );

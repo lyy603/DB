@@ -44,7 +44,7 @@ public class WeatherListPresenterImpl implements IWeatherListPresenter {
                 .subscribe(new HttpSubscriber<DailyWeatherListBean>() {
                     @Override
                     public void _onNext(DailyWeatherListBean futureWeatherListBean) {
-                        view.updateFutureWeather(futureWeatherListBean);
+                        view.updateDailyWeather(futureWeatherListBean);
                     }
 
                     @Override
@@ -56,16 +56,27 @@ public class WeatherListPresenterImpl implements IWeatherListPresenter {
 
     @Override
     public void getFutureWeather(String city) {
-        RetrofitHelper.getRetrofitHelper().create(API.class)
+        RetrofitHelper.getWeatherRetrofitHelper().create(API.class)
                 .getFutureWeather(city)
                 .subscribeOn(Schedulers.io())
                 .flatMap(new Function<JsonObject, Publisher<FutureWeatherBean>>() {
                     @Override
                     public Publisher<FutureWeatherBean> apply(@NonNull JsonObject jsonObject) throws Exception {
-                        return null;
+                        FutureWeatherBean bean = (FutureWeatherBean) GsonHelper.parseJson(jsonObject, FutureWeatherBean.class);
+                        return Flowable.just(bean);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe()
+                .subscribe(new HttpSubscriber<FutureWeatherBean>() {
+                    @Override
+                    public void _onNext(FutureWeatherBean futureWeatherBean) {
+                        view.updateFutureWeather(futureWeatherBean);
+                    }
+
+                    @Override
+                    public void _onError(String message) {
+                        view.showError(message);
+                    }
+                });
     }
 }
