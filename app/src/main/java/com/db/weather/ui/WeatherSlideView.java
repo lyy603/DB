@@ -1,10 +1,15 @@
 package com.db.weather.ui;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.view.View;
+
+import com.blankj.utilcode.util.ImageUtils;
+import com.db.R;
 
 /**
  * 作者：lyy on 2017/6/23 11:37
@@ -33,6 +38,10 @@ public class WeatherSlideView extends View {
 
     //内容距离边框的距离
     private float contentMargin = 10;
+
+    private int textDefaultWidth = 43;
+
+    private int textCurrentWidth = textDefaultWidth;
 
     private Paint mPaint = new Paint();
 
@@ -88,23 +97,45 @@ public class WeatherSlideView extends View {
         this.textPaint.setAntiAlias(true);
         this.textPaint.setColor(borderColor);
         this.textPaint.setStyle(Paint.Style.FILL);
-        this.textPaint.setStrokeWidth(2);
-        this.textPaint.setTextScaleX(1.5f);
+        this.textPaint.setStrokeWidth(1);
+        this.textPaint.setTextScaleX(2f);
 
     }
 
 
-    public void draw(Canvas canvas, String temperature, String src) {
+    public void draw(Canvas canvas, String temperature, String src, int weatherCode) {
+
+        textCurrentWidth = textDefaultWidth * (src.length() - 1);
+//        mWidth = mWidth + textCurrentWidth;
 
         drawBackground(canvas);
 
-        drawContent(canvas, temperature, src);
+        drawContent(canvas, temperature +"\u00b0", src, weatherCode);
     }
 
-    private void drawContent(Canvas canvas, String text, String src) {
-        textPaint.setTextSize(25);
+    private void drawContent(Canvas canvas, String text, String src, int weatherCode) {
+        textPaint.setTextSize(20);
+        int bitmapSize = 50;
+        int textStartX = (int) (startX + contentMargin * 2);
+        int textStartY = (int) (startY + mHeight / 2 + textPaint.getTextSize() / 2);
+        Bitmap bitmap = null;
+        if (weatherCode == 11)
+            bitmap = ImageUtils.getBitmap(getResources(), R.drawable.w_icon_4);
+        else if (weatherCode == 4)
+            bitmap = ImageUtils.getBitmap(getResources(), R.drawable.w_icon_2);
+        else if (weatherCode == 9)
+            bitmap = ImageUtils.getBitmap(getResources(), R.drawable.w_icon_1);
+        else
+            bitmap = ImageUtils.getBitmap(getResources(), R.drawable.w_icon_0);
+
         canvas.drawText(text, startX + contentMargin, startY + mHeight / 2 + textPaint.getTextSize() / 2, textPaint);
-        canvas.drawText(src, startX + mWidth - 90, startY + mHeight / 2 + textPaint.getTextSize() / 2, textPaint);
+        canvas.drawText(src, startX + mWidth - 45 - textCurrentWidth, startY + mHeight / 2 + textPaint.getTextSize() / 2, textPaint);
+
+        Rect rect = new Rect((int) (textStartX + textPaint.measureText(text)),
+                (int) (startY + mHeight / 2 - bitmapSize / 2),
+                (int) (textStartX + textPaint.measureText(text) + bitmapSize),
+                (int) (startY + mHeight / 2 - bitmapSize / 2 + bitmapSize));
+        canvas.drawBitmap(bitmap, null, rect, textPaint);
     }
 
     private void drawBackground(Canvas canvas) {

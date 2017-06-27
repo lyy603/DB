@@ -38,7 +38,7 @@ public class FutureWeatherListBean {
 
     public static class HourlyBean {
         private String text;
-        private String code;
+        private int code;
         private String temperature;
         private String time;
 
@@ -50,11 +50,11 @@ public class FutureWeatherListBean {
             this.text = text;
         }
 
-        public String getCode() {
+        public int getCode() {
             return code;
         }
 
-        public void setCode(String code) {
+        public void setCode(int code) {
             this.code = code;
         }
 

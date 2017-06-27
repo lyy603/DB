@@ -17,13 +17,16 @@ public class PointValue {
 
     private String src;
 
+    private int weatherCode;
+
     public PointValue() {
         set(0, 0);
     }
 
-    public PointValue(float x, float y, String src) {
+    public PointValue(float x, float y, String src, int weatherCode) {
         set(x, y);
         this.src = src;
+        this.weatherCode = weatherCode;
     }
 
     public PointValue(PointValue pointValue) {
@@ -125,5 +128,13 @@ public class PointValue {
 
     public String getSrc() {
         return src;
+    }
+
+    public int getWeatherCode() {
+        return weatherCode;
+    }
+
+    public void setWeatherCode(int weatherCode) {
+        this.weatherCode = weatherCode;
     }
 }

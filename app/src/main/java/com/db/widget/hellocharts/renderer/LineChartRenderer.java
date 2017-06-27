@@ -392,7 +392,7 @@ public class LineChartRenderer extends AbstractChartRenderer {
         //滑动点当前在屏幕内的横坐标
         float currentPointX = Float.NaN;
 
-        float slideViewWidth = 180;
+        float slideViewWidth = 260;
         //中点在屏幕上的纵坐标
         float slideViewMidY = Float.NaN;
         //中点纵坐标对应的坐标值
@@ -433,8 +433,8 @@ public class LineChartRenderer extends AbstractChartRenderer {
         currentX = (int) (((pathMeasure.getLength() - contentMaxSize) + (contentMaxSize - slideViewWidth)) * percent
                 / (computator.getContentRectMinusAllMargins().width() / computator.getCurrentViewport().width()));
 
-        slideView.setParameter(currentPointX, slideViewMidY, 80, slideViewWidth, 30, 15, 4, linePaint.getColor(), color);
-        slideView.draw(canvas, (int) currentY + "", list.get(currentX).getSrc());
+        slideView.setParameter(currentPointX, slideViewMidY, 90, slideViewWidth, 20, 10, 4, linePaint.getColor(), color);
+        slideView.draw(canvas, (int) currentY + "", list.get(currentX).getSrc(), list.get(currentX).getWeatherCode());
         computator.getCurrentViewport();
     }
 
