@@ -3,7 +3,7 @@ package com.db.weather.mvp.model.bean;
 
 import java.util.List;
 
-public class FutureWeatherListBean {
+public class DailyWeatherListBean {
 
     /**
      * status : OK

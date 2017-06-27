@@ -1,9 +1,9 @@
 package com.db.weather.mvp.view;
 
 import com.db.util.retrofit.exception.IErrorView;
-import com.db.weather.mvp.model.bean.FutureWeatherListBean;
+import com.db.weather.mvp.model.bean.DailyWeatherListBean;
 
 public interface IWeatherListView extends IErrorView {
 
-    void updateFutureWeather(FutureWeatherListBean bean);//更新天气详情
+    void updateFutureWeather(DailyWeatherListBean bean);//更新天气详情
 }

@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,8 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.db.R;
 import com.db.util.ProgressUtil;
-import com.db.weather.mvp.model.bean.FutureWeatherListBean;
+import com.db.weather.adapter.WeatherListAdapter;
+import com.db.weather.mvp.model.bean.DailyWeatherListBean;
 import com.db.weather.mvp.presenter.impl.WeatherListPresenterImpl;
 import com.db.weather.mvp.view.IWeatherListView;
 import com.db.widget.fragment.BaseFragment;
@@ -27,11 +30,14 @@ import com.db.widget.hellocharts.model.PointValue;
 import com.db.widget.hellocharts.model.ValueShape;
 import com.db.widget.hellocharts.model.Viewport;
 import com.db.widget.hellocharts.view.LineChartView;
+import com.db.widget.recyclerview.animation.CustomAnimation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.OnClick;
+
+import static com.db.R.id.recycler_view;
 
 
 public class WeatherListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,
@@ -42,6 +48,10 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
     private WeatherListPresenterImpl weatherListPresenter;
 
     LineChartView chart;
+
+    RecyclerView recyclerView;
+
+    private WeatherListAdapter listAdapter;
 
     private Context context;
 
@@ -75,6 +85,7 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
         chart = (LineChartView) view.findViewById(R.id.line_chart_view);
+        recyclerView = (RecyclerView) view.findViewById(recycler_view);
 
         context = view.getContext();
 
@@ -86,18 +97,20 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        weatherListPresenter.getFutureWeather("36bdd59658111bc23ff2bf9aaf6e345c", "zh-chs", "CHGD000000");
+        weatherListPresenter.getDailyWeather("36bdd59658111bc23ff2bf9aaf6e345c", "zh-chs", "CHGD000000");
     }
 
     private void initView() {
         //初始化MVP
         weatherListPresenter = new WeatherListPresenterImpl(this);
-        //设置TitleBar
-
         //设置RefreshLayout
 
         //设置RecyclerView
+        listAdapter = new WeatherListAdapter(new ArrayList<>());
+        listAdapter.openLoadAnimation(new CustomAnimation());
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(listAdapter);
     }
 
     /**
@@ -112,9 +125,9 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
     /**
      * 图表的每个点的显示
      */
-    private void getAxisPoints(FutureWeatherListBean bean) {
+    private void getAxisPoints(DailyWeatherListBean bean) {
         for (int i = 0; i < date.length; i++) {
-            mWeightValues.add(new PointValue(i, weather[i], bean.getHourly().get(i).getText()));//体重坐标数据
+            mWeightValues.add(new PointValue(i, weather[i], bean.getHourly().get(i).getText(), bean.getHourly().get(i).getCode()));//体重坐标数据
         }
     }
 
@@ -165,7 +178,7 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
     }
 
     @Override
-    public void updateFutureWeather(FutureWeatherListBean bean) {
+    public void updateFutureWeather(DailyWeatherListBean bean) {
         date = new String[24];
         for (int i = 0; i < bean.getHourly().size(); i++) {
             date[i] = bean.getHourly().get(i).getTime().substring(11, 16);
@@ -179,6 +192,8 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
         getAxisXLables();//获取x轴的标注
         getAxisPoints(bean);//获取坐标点
         initLineChart();//初始化
+
+        listAdapter.setNewData(bean.getHourly());
     }
 
     @Override

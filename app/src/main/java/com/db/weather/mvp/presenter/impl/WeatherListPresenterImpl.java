@@ -5,7 +5,8 @@ import com.db.API;
 import com.db.util.GsonHelper;
 import com.db.util.retrofit.HttpSubscriber;
 import com.db.util.retrofit.RetrofitHelper;
-import com.db.weather.mvp.model.bean.FutureWeatherListBean;
+import com.db.weather.mvp.model.bean.DailyWeatherListBean;
+import com.db.weather.mvp.model.bean.FutureWeatherBean;
 import com.db.weather.mvp.presenter.IWeatherListPresenter;
 import com.db.weather.mvp.view.IWeatherListView;
 import com.google.gson.JsonObject;
@@ -27,22 +28,22 @@ public class WeatherListPresenterImpl implements IWeatherListPresenter {
     }
 
     @Override
-    public void getFutureWeather(String key, String language, String city) {
+    public void getDailyWeather(String key, String language, String city) {
         RetrofitHelper.getWeatherRetrofitHelper()
                 .create(API.class)
-                .getFutureWeather(city, language, key)
+                .getDailyWeather(city, language, key)
                 .subscribeOn(Schedulers.io())
-                .flatMap(new Function<JsonObject, Publisher<FutureWeatherListBean>>() {
+                .flatMap(new Function<JsonObject, Publisher<DailyWeatherListBean>>() {
                     @Override
-                    public Publisher<FutureWeatherListBean> apply(@NonNull JsonObject jsonObject) throws Exception {
-                        FutureWeatherListBean bean = (FutureWeatherListBean) GsonHelper.parseJson(jsonObject, FutureWeatherListBean.class);
+                    public Publisher<DailyWeatherListBean> apply(@NonNull JsonObject jsonObject) throws Exception {
+                        DailyWeatherListBean bean = (DailyWeatherListBean) GsonHelper.parseJson(jsonObject, DailyWeatherListBean.class);
                         return Flowable.just(bean);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new HttpSubscriber<FutureWeatherListBean>() {
+                .subscribe(new HttpSubscriber<DailyWeatherListBean>() {
                     @Override
-                    public void _onNext(FutureWeatherListBean futureWeatherListBean) {
+                    public void _onNext(DailyWeatherListBean futureWeatherListBean) {
                         view.updateFutureWeather(futureWeatherListBean);
                     }
 
@@ -51,5 +52,20 @@ public class WeatherListPresenterImpl implements IWeatherListPresenter {
                         view.showError(message);
                     }
                 });
+    }
+
+    @Override
+    public void getFutureWeather(String city) {
+        RetrofitHelper.getRetrofitHelper().create(API.class)
+                .getFutureWeather(city)
+                .subscribeOn(Schedulers.io())
+                .flatMap(new Function<JsonObject, Publisher<FutureWeatherBean>>() {
+                    @Override
+                    public Publisher<FutureWeatherBean> apply(@NonNull JsonObject jsonObject) throws Exception {
+                        return null;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
     }
 }
