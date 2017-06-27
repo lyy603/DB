@@ -17,6 +17,7 @@ import com.db.R;
 import com.db.util.ProgressUtil;
 import com.db.weather.adapter.WeatherListAdapter;
 import com.db.weather.mvp.model.bean.DailyWeatherListBean;
+import com.db.weather.mvp.model.bean.FutureWeatherBean;
 import com.db.weather.mvp.presenter.impl.WeatherListPresenterImpl;
 import com.db.weather.mvp.view.IWeatherListView;
 import com.db.widget.fragment.BaseFragment;
@@ -98,6 +99,7 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         weatherListPresenter.getDailyWeather("36bdd59658111bc23ff2bf9aaf6e345c", "zh-chs", "CHGD000000");
+        weatherListPresenter.getFutureWeather("CHGD000000");
     }
 
     private void initView() {
@@ -178,7 +180,7 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
     }
 
     @Override
-    public void updateFutureWeather(DailyWeatherListBean bean) {
+    public void updateDailyWeather(DailyWeatherListBean bean) {
         date = new String[24];
         for (int i = 0; i < bean.getHourly().size(); i++) {
             date[i] = bean.getHourly().get(i).getTime().substring(11, 16);
@@ -192,8 +194,11 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
         getAxisXLables();//获取x轴的标注
         getAxisPoints(bean);//获取坐标点
         initLineChart();//初始化
+    }
 
-        listAdapter.setNewData(bean.getHourly());
+    @Override
+    public void updateFutureWeather(FutureWeatherBean bean) {
+        listAdapter.setNewData(bean.getWeather().get(0).getFuture());
     }
 
     @Override
