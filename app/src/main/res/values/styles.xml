@@ -68,7 +68,7 @@
     </style>
 
     <style name="WeatherTextView" parent="CommonTextView">
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">15dp</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/color_text_white</item>

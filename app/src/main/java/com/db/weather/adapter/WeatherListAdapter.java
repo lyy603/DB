@@ -4,11 +4,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.db.R;
 import com.db.weather.mvp.model.bean.FutureWeatherBean;
+import com.db.widget.CurveView;
 
 import java.util.List;
 
 public class WeatherListAdapter extends BaseQuickAdapter<FutureWeatherBean.WeatherBean.FutureBean, BaseViewHolder> {
 
+    private CurveView curveView;
 
     public WeatherListAdapter(List<FutureWeatherBean.WeatherBean.FutureBean> data) {
         super(R.layout.item_weather, data);
@@ -25,5 +27,9 @@ public class WeatherListAdapter extends BaseQuickAdapter<FutureWeatherBean.Weath
                 .setText(R.id.tv_date_2, bean.getDate())
                 .setText(R.id.tv_weather_src_low, text[1])
                 .setText(R.id.tv_weather_src_height, text[0]);
+
+        curveView = viewHolder.getView(R.id.cv_weather);
+        curveView.setIndex(viewHolder.getAdapterPosition());
+        curveView.setData(getData());
     }
 }

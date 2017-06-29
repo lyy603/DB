@@ -621,8 +621,8 @@ public class FutureWeatherBean {
             private String text;
             private String code1;
             private String code2;
-            private String high;
-            private String low;
+            private int high;
+            private int low;
             private String cop;
             private String wind;
 
@@ -666,19 +666,19 @@ public class FutureWeatherBean {
                 this.code2 = code2;
             }
 
-            public String getHigh() {
+            public int getHigh() {
                 return high;
             }
 
-            public void setHigh(String high) {
+            public void setHigh(int high) {
                 this.high = high;
             }
 
-            public String getLow() {
+            public int getLow() {
                 return low;
             }
 
-            public void setLow(String low) {
+            public void setLow(int low) {
                 this.low = low;
             }
 

@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -38,8 +39,6 @@ import java.util.List;
 
 import butterknife.OnClick;
 
-import static com.db.R.id.recycler_view;
-
 
 public class WeatherListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener,
         IWeatherListView, BaseQuickAdapter.RequestLoadMoreListener {
@@ -51,6 +50,8 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
     LineChartView chart;
 
     RecyclerView recyclerView;
+
+    LinearLayout ll_weather;
 
     private WeatherListAdapter listAdapter;
 
@@ -85,8 +86,9 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
+        ll_weather = (LinearLayout) view.findViewById(R.id.ll_weather);
         chart = (LineChartView) view.findViewById(R.id.line_chart_view);
-        recyclerView = (RecyclerView) view.findViewById(recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         context = view.getContext();
 
@@ -106,7 +108,6 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
         //初始化MVP
         weatherListPresenter = new WeatherListPresenterImpl(this);
         //设置RefreshLayout
-
         //设置RecyclerView
         listAdapter = new WeatherListAdapter(new ArrayList<>());
         listAdapter.openLoadAnimation(new CustomAnimation());

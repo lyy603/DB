@@ -3,7 +3,6 @@
     android:layout_width="100dp"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
-    android:background="@color/color_gray"
     android:orientation="vertical">
 
     <TextView
@@ -23,6 +22,11 @@
         android:id="@+id/iv_weather_height"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <com.db.widget.CurveView
+        android:id="@+id/cv_weather"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
     <ImageView
         android:id="@+id/iv_weather_low"
