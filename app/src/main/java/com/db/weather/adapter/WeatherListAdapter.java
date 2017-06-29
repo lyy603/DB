@@ -16,6 +16,8 @@ public class WeatherListAdapter extends BaseQuickAdapter<FutureWeatherBean.Weath
 
     private CurveView curveView;
 
+    private int index = 0;
+
     public WeatherListAdapter(List<FutureWeatherBean.WeatherBean.FutureBean> data) {
         super(R.layout.item_weather, data);
     }
@@ -32,6 +34,13 @@ public class WeatherListAdapter extends BaseQuickAdapter<FutureWeatherBean.Weath
                 .setText(R.id.tv_weather_src_low, text[1])
                 .setText(R.id.tv_weather_src_height, text[0]);
 
+        if (viewHolder.getAdapterPosition() == index)
+            viewHolder.setBackgroundColor(R.id.ll_weather_item,
+                    mContext.getResources().getColor(R.color.color_gray_4));
+        else
+            viewHolder.setBackgroundColor(R.id.ll_weather_item,
+                    mContext.getResources().getColor(R.color.transparent));
+
         Glide.with(mContext)
                 .load(WeatherImageUtil.getResourceId(bean.getCode1()))
                 .centerCrop()
@@ -47,5 +56,9 @@ public class WeatherListAdapter extends BaseQuickAdapter<FutureWeatherBean.Weath
         curveView = viewHolder.getView(R.id.cv_weather);
         curveView.setIndex(viewHolder.getAdapterPosition());
         curveView.setData(getData());
+    }
+
+    public void setSelectedIndex(int index) {
+        this.index = index;
     }
 }

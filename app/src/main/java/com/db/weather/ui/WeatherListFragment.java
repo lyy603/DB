@@ -120,8 +120,11 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
         recyclerView.addOnItemTouchListener(new SimpleClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(position - 2, 0);
                 selectedItemIndex = position;
+                listAdapter.setSelectedIndex(selectedItemIndex);
+                listAdapter.notifyDataSetChanged();
+                ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(position - 2, 0);
+
             }
 
             @Override
