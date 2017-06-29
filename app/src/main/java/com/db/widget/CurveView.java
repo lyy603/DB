@@ -20,17 +20,25 @@ import java.util.List;
 
 public class CurveView extends View {
 
-    private static final float LINE_SMOOTHNESS = 0.35f;
+    private static final float LINE_SMOOTHNESS = 0.16f;
 
     protected float density;
 
     private Paint linePaint = new Paint();
+
+    private Paint pointPaint = new Paint();
 
     private Path path = new Path();
 
     private Path path2 = new Path();
 
     private int index = 0;
+
+    private float pointRadius = 5;
+
+    private float rawYTop = 45;
+
+    private float rawYBottom = 20;
 
     private List<FutureWeatherBean.WeatherBean.FutureBean> list = new ArrayList<>();
 
@@ -57,11 +65,29 @@ public class CurveView extends View {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        if (list != null && list.size() > 0)
-            drawSmoothPath(canvas, list);
+        if (list != null && list.size() > 0) {
+            drawHeightPath(canvas, list);
+            drawLowPath(canvas, list);
+            drawPoint(canvas, list);
+        }
     }
 
-    private void drawSmoothPath(Canvas canvas, List<FutureWeatherBean.WeatherBean.FutureBean> list) {
+    private void drawPoint(Canvas canvas, List<FutureWeatherBean.WeatherBean.FutureBean> list) {
+
+        float currentPointHighX = Float.NaN;
+        float currentPointHighY = Float.NaN;
+        float currentPointLowX = Float.NaN;
+        float currentPointLowY = Float.NaN;
+
+        currentPointHighX = currentPointLowX = this.getWidth() / 2;
+        currentPointLowY = TransformUtil.temperatureTransformRawY(rawYTop, rawYBottom, list.get(index).getLow(), getHeight());
+        currentPointHighY = TransformUtil.temperatureTransformRawY(rawYTop, rawYBottom, list.get(index).getHigh(), getHeight());
+
+        canvas.drawCircle(currentPointLowX, currentPointLowY, pointRadius, pointPaint);
+        canvas.drawCircle(currentPointHighX, currentPointHighY, pointRadius, pointPaint);
+    }
+
+    private void drawHeightPath(Canvas canvas, List<FutureWeatherBean.WeatherBean.FutureBean> list) {
 
         final int lineSize = list.size();
         float prePreviousPointX = Float.NaN;
@@ -78,12 +104,12 @@ public class CurveView extends View {
 //        for (int valueIndex = 0; valueIndex < lineSize; ++valueIndex) {
         if (Float.isNaN(currentPointX)) {
             currentPointX = this.getWidth() / 2;
-            currentPointY = TransformUtil.temperatureTransformRawY(45, 20, list.get(index).getHigh(), getHeight());
+            currentPointY = TransformUtil.temperatureTransformRawY(rawYTop, rawYBottom, list.get(index).getHigh(), getHeight());
         }
         if (Float.isNaN(previousPointX)) {
             if (index > 0) {
                 previousPointX = this.getWidth() / 2 - this.getWidth();
-                previousPointY = TransformUtil.temperatureTransformRawY(45, 20, list.get(index - 1).getHigh(), getHeight());
+                previousPointY = TransformUtil.temperatureTransformRawY(rawYTop, rawYBottom, list.get(index - 1).getHigh(), getHeight());
             } else {
                 previousPointX = currentPointX;
                 previousPointY = currentPointY;
@@ -93,7 +119,7 @@ public class CurveView extends View {
         if (Float.isNaN(prePreviousPointX)) {
             if (index > 1) {
                 prePreviousPointX = this.getWidth() / 2 - this.getWidth() * 2;
-                prePreviousPointY = TransformUtil.temperatureTransformRawY(45, 20, list.get(index - 2).getHigh(), getHeight());
+                prePreviousPointY = TransformUtil.temperatureTransformRawY(rawYTop, rawYBottom, list.get(index - 2).getHigh(), getHeight());
             } else {
                 prePreviousPointX = previousPointX;
                 prePreviousPointY = previousPointY;
@@ -103,7 +129,7 @@ public class CurveView extends View {
         // nextPoint is always new one or it is equal currentPoint.
         if (index < lineSize - 1) {
             nextPointX = this.getWidth() / 2 + this.getWidth();
-            nextPointY = TransformUtil.temperatureTransformRawY(45, 20, list.get(index + 1).getHigh(), getHeight());
+            nextPointY = TransformUtil.temperatureTransformRawY(rawYTop, rawYBottom, list.get(index + 1).getHigh(), getHeight());
         } else {
             nextPointX = currentPointX;
             nextPointY = currentPointY;
@@ -111,7 +137,7 @@ public class CurveView extends View {
 
         if (index < lineSize - 2) {
             nextNPointX = this.getWidth() / 2 + this.getWidth() * 2;
-            nextNPointY = TransformUtil.temperatureTransformRawY(45, 20, list.get(index + 2).getHigh(), getHeight());
+            nextNPointY = TransformUtil.temperatureTransformRawY(rawYTop, rawYBottom, list.get(index + 2).getHigh(), getHeight());
         } else {
             nextNPointX = currentPointX;
             nextNPointY = currentPointY;
@@ -119,7 +145,7 @@ public class CurveView extends View {
 
         //中点左边的曲线
         if (index > 0) {
-            path.moveTo(-this.getWidth() / 2, TransformUtil.temperatureTransformRawY(45, 20, list.get(index - 1).getHigh(), this.getHeight()));
+            path.moveTo(-this.getWidth() / 2, TransformUtil.temperatureTransformRawY(rawYTop, rawYBottom, list.get(index - 1).getHigh(), this.getHeight()));
             final float firstDiffX = (currentPointX - prePreviousPointX);
             final float firstDiffY = (currentPointY - prePreviousPointY);
             final float secondDiffX = (nextPointX - previousPointX);
@@ -134,7 +160,99 @@ public class CurveView extends View {
 
         //中点右边的曲线
         if (index < lineSize - 1) {
-            path2.moveTo(this.getWidth() / 2, TransformUtil.temperatureTransformRawY(45, 20, list.get(index).getHigh(), this.getHeight()));
+            path2.moveTo(this.getWidth() / 2, TransformUtil.temperatureTransformRawY(rawYTop, rawYBottom, list.get(index).getHigh(), this.getHeight()));
+            final float firstDiffX2 = (nextPointX - previousPointX);
+            final float firstDiffY2 = (nextPointY - previousPointY);
+            final float secondDiffX2 = (nextNPointX - currentPointX);
+            final float secondDiffY2 = (nextNPointY - currentPointY);
+            final float firstControlPointX2 = currentPointX + (LINE_SMOOTHNESS * firstDiffX2);
+            final float firstControlPointY2 = currentPointY + (LINE_SMOOTHNESS * firstDiffY2);
+            final float secondControlPointX2 = nextPointX - (LINE_SMOOTHNESS * secondDiffX2);
+            final float secondControlPointY2 = nextPointY - (LINE_SMOOTHNESS * secondDiffY2);
+            path2.cubicTo(firstControlPointX2, firstControlPointY2, secondControlPointX2, secondControlPointY2,
+                    nextPointX, nextPointY);
+        }
+
+        canvas.drawPath(path, linePaint);
+        canvas.drawPath(path2, linePaint);
+        path.reset();
+        path2.reset();
+    }
+
+    private void drawLowPath(Canvas canvas, List<FutureWeatherBean.WeatherBean.FutureBean> list) {
+
+        final int lineSize = list.size();
+        float prePreviousPointX = Float.NaN;
+        float prePreviousPointY = Float.NaN;
+        float previousPointX = Float.NaN;
+        float previousPointY = Float.NaN;
+        float currentPointX = Float.NaN;
+        float currentPointY = Float.NaN;
+        float nextPointX = Float.NaN;
+        float nextPointY = Float.NaN;
+        float nextNPointX = Float.NaN;
+        float nextNPointY = Float.NaN;
+
+//        for (int valueIndex = 0; valueIndex < lineSize; ++valueIndex) {
+        if (Float.isNaN(currentPointX)) {
+            currentPointX = this.getWidth() / 2;
+            currentPointY = TransformUtil.temperatureTransformRawY(rawYTop, rawYBottom, list.get(index).getLow(), getHeight());
+        }
+        if (Float.isNaN(previousPointX)) {
+            if (index > 0) {
+                previousPointX = this.getWidth() / 2 - this.getWidth();
+                previousPointY = TransformUtil.temperatureTransformRawY(rawYTop, rawYBottom, list.get(index - 1).getLow(), getHeight());
+            } else {
+                previousPointX = currentPointX;
+                previousPointY = currentPointY;
+            }
+        }
+
+        if (Float.isNaN(prePreviousPointX)) {
+            if (index > 1) {
+                prePreviousPointX = this.getWidth() / 2 - this.getWidth() * 2;
+                prePreviousPointY = TransformUtil.temperatureTransformRawY(rawYTop, rawYBottom, list.get(index - 2).getLow(), getHeight());
+            } else {
+                prePreviousPointX = previousPointX;
+                prePreviousPointY = previousPointY;
+            }
+        }
+
+        // nextPoint is always new one or it is equal currentPoint.
+        if (index < lineSize - 1) {
+            nextPointX = this.getWidth() / 2 + this.getWidth();
+            nextPointY = TransformUtil.temperatureTransformRawY(rawYTop, rawYBottom, list.get(index + 1).getLow(), getHeight());
+        } else {
+            nextPointX = currentPointX;
+            nextPointY = currentPointY;
+        }
+
+        if (index < lineSize - 2) {
+            nextNPointX = this.getWidth() / 2 + this.getWidth() * 2;
+            nextNPointY = TransformUtil.temperatureTransformRawY(rawYTop, rawYBottom, list.get(index + 2).getLow(), getHeight());
+        } else {
+            nextNPointX = currentPointX;
+            nextNPointY = currentPointY;
+        }
+
+        //中点左边的曲线
+        if (index > 0) {
+            path.moveTo(-this.getWidth() / 2, TransformUtil.temperatureTransformRawY(rawYTop, rawYBottom, list.get(index - 1).getLow(), this.getHeight()));
+            final float firstDiffX = (currentPointX - prePreviousPointX);
+            final float firstDiffY = (currentPointY - prePreviousPointY);
+            final float secondDiffX = (nextPointX - previousPointX);
+            final float secondDiffY = (nextPointY - previousPointY);
+            final float firstControlPointX = previousPointX + (LINE_SMOOTHNESS * firstDiffX);
+            final float firstControlPointY = previousPointY + (LINE_SMOOTHNESS * firstDiffY);
+            final float secondControlPointX = currentPointX - (LINE_SMOOTHNESS * secondDiffX);
+            final float secondControlPointY = currentPointY - (LINE_SMOOTHNESS * secondDiffY);
+            path.cubicTo(firstControlPointX, firstControlPointY, secondControlPointX, secondControlPointY,
+                    currentPointX, currentPointY);
+        }
+
+        //中点右边的曲线
+        if (index < lineSize - 1) {
+            path2.moveTo(this.getWidth() / 2, TransformUtil.temperatureTransformRawY(rawYTop, rawYBottom, list.get(index).getLow(), this.getHeight()));
             final float firstDiffX2 = (nextPointX - previousPointX);
             final float firstDiffY2 = (nextPointY - previousPointY);
             final float secondDiffX2 = (nextNPointX - currentPointX);
@@ -155,9 +273,13 @@ public class CurveView extends View {
 
     private void prepareLinePaint() {
         linePaint.setAntiAlias(true);
-        linePaint.setColor(getResources().getColor(R.color.color_orange));
+        linePaint.setStrokeWidth(3);
         linePaint.setStyle(Paint.Style.STROKE);
-        linePaint.setStrokeWidth(2);
         linePaint.setStrokeCap(Paint.Cap.ROUND);
+        linePaint.setColor(getResources().getColor(R.color.color_white));
+
+        pointPaint.setAntiAlias(true);
+        pointPaint.setStyle(Paint.Style.FILL);
+        pointPaint.setColor(getResources().getColor(R.color.color_white));
     }
 }

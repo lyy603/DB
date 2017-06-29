@@ -1,8 +1,12 @@
 package com.db.weather.adapter;
 
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.db.R;
+import com.db.weather.WeatherImageUtil;
 import com.db.weather.mvp.model.bean.FutureWeatherBean;
 import com.db.widget.CurveView;
 
@@ -27,6 +31,18 @@ public class WeatherListAdapter extends BaseQuickAdapter<FutureWeatherBean.Weath
                 .setText(R.id.tv_date_2, bean.getDate())
                 .setText(R.id.tv_weather_src_low, text[1])
                 .setText(R.id.tv_weather_src_height, text[0]);
+
+        Glide.with(mContext)
+                .load(WeatherImageUtil.getResourceId(bean.getCode1()))
+                .centerCrop()
+                .crossFade()
+                .into((ImageView) viewHolder.getView(R.id.iv_weather_height));
+
+        Glide.with(mContext)
+                .load(WeatherImageUtil.getResourceId(bean.getCode2()))
+                .centerCrop()
+                .crossFade()
+                .into((ImageView) viewHolder.getView(R.id.iv_weather_low));
 
         curveView = viewHolder.getView(R.id.cv_weather);
         curveView.setIndex(viewHolder.getAdapterPosition());

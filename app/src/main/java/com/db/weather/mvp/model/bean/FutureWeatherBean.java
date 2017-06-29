@@ -619,8 +619,8 @@ public class FutureWeatherBean {
             private String date;
             private String day;
             private String text;
-            private String code1;
-            private String code2;
+            private int code1;
+            private int code2;
             private int high;
             private int low;
             private String cop;
@@ -650,19 +650,19 @@ public class FutureWeatherBean {
                 this.text = text;
             }
 
-            public String getCode1() {
+            public int getCode1() {
                 return code1;
             }
 
-            public void setCode1(String code1) {
+            public void setCode1(int code1) {
                 this.code1 = code1;
             }
 
-            public String getCode2() {
+            public int getCode2() {
                 return code2;
             }
 
-            public void setCode2(String code2) {
+            public void setCode2(int code2) {
                 this.code2 = code2;
             }
 

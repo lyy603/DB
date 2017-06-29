@@ -8,8 +8,7 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.view.View;
 
-import com.blankj.utilcode.util.ImageUtils;
-import com.db.R;
+import com.db.weather.WeatherImageUtil;
 
 /**
  * 作者：lyy on 2017/6/23 11:37
@@ -110,7 +109,7 @@ public class WeatherSlideView extends View {
 
         drawBackground(canvas);
 
-        drawContent(canvas, temperature +"\u00b0", src, weatherCode);
+        drawContent(canvas, temperature + "\u00b0", src, weatherCode);
     }
 
     private void drawContent(Canvas canvas, String text, String src, int weatherCode) {
@@ -118,15 +117,8 @@ public class WeatherSlideView extends View {
         int bitmapSize = 50;
         int textStartX = (int) (startX + contentMargin * 2);
         int textStartY = (int) (startY + mHeight / 2 + textPaint.getTextSize() / 2);
-        Bitmap bitmap = null;
-        if (weatherCode == 11)
-            bitmap = ImageUtils.getBitmap(getResources(), R.drawable.w_icon_4);
-        else if (weatherCode == 4)
-            bitmap = ImageUtils.getBitmap(getResources(), R.drawable.w_icon_2);
-        else if (weatherCode == 9)
-            bitmap = ImageUtils.getBitmap(getResources(), R.drawable.w_icon_1);
-        else
-            bitmap = ImageUtils.getBitmap(getResources(), R.drawable.w_icon_0);
+
+        Bitmap bitmap = WeatherImageUtil.getImg(getResources(), weatherCode);
 
         canvas.drawText(text, startX + contentMargin, startY + mHeight / 2 + textPaint.getTextSize() / 2, textPaint);
         canvas.drawText(src, startX + mWidth - 45 - textCurrentWidth, startY + mHeight / 2 + textPaint.getTextSize() / 2, textPaint);
