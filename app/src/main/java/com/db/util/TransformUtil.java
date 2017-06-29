@@ -6,8 +6,8 @@ package com.db.util;
 
 public class TransformUtil {
 
-    public static float temperatureTransformRawY(float top, float bottom, float currentVaule, float viewHeight) {
+    public static float temperatureTransformRawY(float top, float bottom, float currentVaule, float viewHeight, float viewMargin) {
         float rawY = (currentVaule - bottom) / (top - bottom) * viewHeight;
-        return viewHeight - rawY;
+        return viewHeight - rawY + viewMargin / 4;
     }
 }

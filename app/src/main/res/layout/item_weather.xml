@@ -27,7 +27,7 @@
     <com.db.widget.CurveView
         android:id="@+id/cv_weather"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="90dp" />
 
     <ImageView
         android:id="@+id/iv_weather_low"

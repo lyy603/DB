@@ -110,7 +110,6 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
         //设置RefreshLayout
         //设置RecyclerView
         listAdapter = new WeatherListAdapter(new ArrayList<>());
-        listAdapter.openLoadAnimation(new CustomAnimation());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(listAdapter);
