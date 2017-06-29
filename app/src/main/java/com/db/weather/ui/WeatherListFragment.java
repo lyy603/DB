@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.db.R;
 import com.db.util.ProgressUtil;
 import com.db.weather.adapter.WeatherListAdapter;
@@ -32,7 +33,6 @@ import com.db.widget.hellocharts.model.PointValue;
 import com.db.widget.hellocharts.model.ValueShape;
 import com.db.widget.hellocharts.model.Viewport;
 import com.db.widget.hellocharts.view.LineChartView;
-import com.db.widget.recyclerview.animation.CustomAnimation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +56,9 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
     private WeatherListAdapter listAdapter;
 
     private Context context;
+
+    //天气预报列表选中子项的位置
+    private int selectedItemIndex = 0;
 
     private List<PointValue> mWeightValues = new ArrayList<PointValue>();//体重的坐标集合
     private List<AxisValue> mAxisValues = new ArrayList<AxisValue>();//时间的坐标标注集合
@@ -113,6 +116,29 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(listAdapter);
+
+        recyclerView.addOnItemTouchListener(new SimpleClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPositionWithOffset(position - 2, 0);
+                selectedItemIndex = position;
+            }
+
+            @Override
+            public void onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+
+            @Override
+            public void onItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+        });
     }
 
     /**
