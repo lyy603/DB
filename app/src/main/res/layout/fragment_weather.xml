@@ -12,11 +12,19 @@
         android:layout_height="200dp"
         android:layout_margin="@dimen/margin_size_small" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/color_white_2"
+        android:layout_marginTop="@dimen/margin_size_small"
         android:layout_marginEnd="@dimen/margin_size_small"
-        android:layout_marginStart="@dimen/margin_size_small" />
+        android:layout_marginStart="@dimen/margin_size_small">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
 
 </LinearLayout>

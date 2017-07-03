@@ -36,7 +36,7 @@ public class WeatherListAdapter extends BaseQuickAdapter<FutureWeatherBean.Weath
 
         if (viewHolder.getAdapterPosition() == index)
             viewHolder.setBackgroundColor(R.id.ll_weather_item,
-                    mContext.getResources().getColor(R.color.color_gray_4));
+                    mContext.getResources().getColor(R.color.color_white_3));
         else
             viewHolder.setBackgroundColor(R.id.ll_weather_item,
                     mContext.getResources().getColor(R.color.transparent));

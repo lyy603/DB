@@ -29,6 +29,8 @@
     <!--各种颜色-->
     <color name="transparent">#00000000</color>
     <color name="color_white">#ffffff</color>
+    <color name="color_white_2">#33ffffff</color>
+    <color name="color_white_3">#66ffffff</color>
     <color name="color_black_1">#000000</color>
     <color name="color_black_2">#1E2535</color>
     <color name="color_black_3">#0D121A</color>
