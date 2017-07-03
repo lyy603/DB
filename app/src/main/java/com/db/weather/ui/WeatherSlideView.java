@@ -8,6 +8,7 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.view.View;
 
+import com.db.R;
 import com.db.weather.WeatherImageUtil;
 
 /**
@@ -88,16 +89,14 @@ public class WeatherSlideView extends View {
         this.backgroundColor = backgroundColor;
 
         this.mPaint.setAntiAlias(true);
-        this.mPaint.setColor(borderColor);
-        this.mPaint.setStyle(Paint.Style.STROKE);
+        this.mPaint.setColor(getResources().getColor(R.color.color_white_4));
+        this.mPaint.setStyle(Paint.Style.FILL);
         this.mPaint.setStrokeWidth(borderWidth);
-        this.mPaint.setStrokeCap(Paint.Cap.ROUND);
 
         this.textPaint.setAntiAlias(true);
         this.textPaint.setColor(borderColor);
         this.textPaint.setStyle(Paint.Style.FILL);
         this.textPaint.setStrokeWidth(1);
-        this.textPaint.setTextScaleX(2f);
 
     }
 
@@ -113,7 +112,7 @@ public class WeatherSlideView extends View {
     }
 
     private void drawContent(Canvas canvas, String text, String src, int weatherCode) {
-        textPaint.setTextSize(20);
+        textPaint.setTextSize(35);
         int bitmapSize = 50;
         int textStartX = (int) (startX + contentMargin * 2);
         int textStartY = (int) (startY + mHeight / 2 + textPaint.getTextSize() / 2);
@@ -134,22 +133,16 @@ public class WeatherSlideView extends View {
         mPath.moveTo(startX, startY);
         mPath.lineTo(startX + mWidth, startY);
 
-        mPath.moveTo(startX + mWidth, startY);
         mPath.lineTo(startX + mWidth, startY + mHeight);
 
-        mPath.moveTo(startX + mWidth, startY + mHeight);
         mPath.lineTo(startX + mWidth / 2 + mCornerWidth / 2, startY + mHeight);
 
-        mPath.moveTo(startX + mWidth / 2 + mCornerWidth / 2, startY + mHeight);
         mPath.lineTo(startX + mWidth / 2, startY + mAllHeight);
 
-        mPath.moveTo(startX + mWidth / 2, startY + mAllHeight);
         mPath.lineTo(startX + mWidth / 2 - mCornerWidth / 2, startY + mHeight);
 
-        mPath.moveTo(startX + mWidth / 2 - mCornerWidth / 2, startY + mHeight);
         mPath.lineTo(startX, startY + mHeight);
 
-        mPath.moveTo(startX, startY + mHeight);
         mPath.lineTo(startX, startY);
 
         canvas.drawPath(mPath, mPaint);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -164,7 +165,7 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
 
     private void initLineChart() {    //折线的集合，也就是体重和脂肪的折线保存的集合
         List<Line> lines = new ArrayList<Line>();    //体重的折线
-        Line line = new Line(mWeightValues).setColor(Color.BLUE);  //折线的颜色和坐标数据
+        Line line = new Line(mWeightValues).setColor(Color.WHITE);  //折线的颜色和坐标数据
         //折线图上每个数据点的形状（有三种 ：ValueShape.SQUARE正方形  ValueShape.CIRCLE圆点  ValueShape.DIAMOND菱形）
         line.setShape(ValueShape.CIRCLE);
         line.setStrokeWidth(2);
@@ -184,6 +185,7 @@ public class WeatherListFragment extends BaseFragment implements SwipeRefreshLay
         axisX.setTextSize(8);//设置字体大小
         axisX.setValues(mAxisValues);  //填充X轴的坐标名称
         axisX.setHasLines(true);
+        axisX.setLineColor(ContextCompat.getColor(getContext(), R.color.line_chart_renderer_line_color));
         data.setAxisXBottom(axisX); //x 轴在底部
 
         //设置Y坐标轴
