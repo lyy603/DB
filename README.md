@@ -9,3 +9,7 @@
     5.参照 hellocharts 的 LineChartView 源码，修改并实现可滑动动画天气表格自定义控件
     
 ## 部分截图
+<div>
+<img src="./screenshots/d.png" width = "40%"/>
+<img src="./screenshots/c.png" width = "40%"/>
+</div>
