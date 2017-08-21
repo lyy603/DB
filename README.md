@@ -10,6 +10,6 @@
     
 ## 部分截图
 <div>
-<img src="./screenshots/d.png" width = "40%"/>
-<img src="./screenshots/c.png" width = "40%"/>
+<img src="./screenshots/d.jpg" width = "40%"/>
+<img src="./screenshots/c.jpg" width = "40%"/>
 </div>
