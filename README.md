@@ -11,5 +11,14 @@
 ## 部分截图
 <div>
 <img src="./screenshots/d.jpg" width = "40%"/>
+<img src="./screenshots/e.jpg" width = "40%"/>
+</div>
+
+<div>
 <img src="./screenshots/c.jpg" width = "40%"/>
+<img src="./screenshots/b.jpg" width = "40%"/>
+</div>
+
+<div>
+<img src="./screenshots/a.jpg" width = "40%"/>
 </div>
